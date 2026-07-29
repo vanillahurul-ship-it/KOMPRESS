@@ -1,4 +1,4 @@
-FROM node:20-slim
+FROM node:22-slim
 
 # The revenue prediction feature spawns a Python subprocess (scikit-learn/pandas),
 # so this image needs both Node and Python runtimes.
