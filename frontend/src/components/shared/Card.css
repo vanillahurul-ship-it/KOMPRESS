@@ -1,0 +1,46 @@
+.shared-card {
+  background: var(--admin-card, #FDFAF6);
+  border-radius: 28px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 24px 28px;
+}
+
+.shared-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--admin-text, #2C3947);
+  margin: 0 0 4px;
+}
+
+.shared-card-subtitle {
+  font-size: 13px;
+  color: #6B7280;
+  margin: 0 0 16px;
+}
+
+.stat-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: var(--chart-columns, repeat(auto-fit, minmax(360px, 1fr)));
+  gap: 20px;
+}
+
+/* Grid items default to min-width: auto, which can block a track from
+   shrinking below its content's intrinsic width (e.g. a wide chart) and
+   force the whole grid to overflow — same fix already applied to
+   .shared-table-grid in Table.css. */
+.stat-card-grid > *,
+.chart-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}

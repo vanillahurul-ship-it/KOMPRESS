@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+:root{
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Poppins", sans-serif;
+
+  --primary:#4E6F3B;
+  --secondary:#9EBF73;
+  --background:#F6F4E8;
+  --hero:#DDE7C9;
+
+  /* Admin panel palette (Dashboard, Data Nasabah, Transaksi, Jenis Sampah, Prediksi, Laporan, Profil) */
+  --admin-background:#F6F4E8;
+  --admin-sidebar:#E1EAD3;
+  --admin-sidebar-active:#FDFAF6;
+  --admin-sidebar-stroke:#000000;
+  --admin-header:#2C3947;
+  --admin-header-text:#E1EAD3;
+  --admin-brand:#39701A;
+  --admin-admin-box:rgba(131, 147, 113, 0.8);
+  --admin-admin-text:#FFFFFF;
+  --admin-admin-name:#000000;
+  --admin-icon-circle:#2C3947;
+  --admin-card:#FDFAF6;
+  --admin-table-header:rgba(168, 178, 152, 0.91);
+  --admin-search:rgba(90, 136, 65, 0.75);
+  --admin-button:#AFC99C;
+  --admin-primary:#546B41;
+  --admin-text:#2C3947;
+  --admin-rupiah:#5A8841;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,
+body,
+#root{
+  width:100%;
+  min-height:100vh;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body{
+  font-family:var(--font-body);
+  background:var(--background);
+}
+
+/* Footer styles to match design */
+.site-footer{
+  background: #2C3947;
+  color: #99BC85;
+  padding: 24px 0;
+}
+.site-footer a{ color: #99BC85; }
+.card-shadow{ box-shadow: 0 6px 0 rgba(0,0,0,0.03); }
+
+/* Section title */
+.section-title{
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-size: 28px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Card baseline */
+.card {
+  background: rgba(250,235,204,0.65);
+  border: 1px solid #E7E1CF;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.03);
+}
+
+.card h4, .card h3 {
+  font-family: var(--font-heading);
+  color: var(--primary);
+}
+
+/* Utility center for section content */
+.center-content{ text-align:center; }
+
+/* Tighten up hero spacing */
+.hero-wrap { padding-top: 28px; padding-bottom: 28px; }
+
+/* Global container constraints requested */
+.max-w-7xl {
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+}
+
+/* Horizontal padding to ~40px */
+.px-14 {
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+}
+
+/* Navbar styles */
+nav{
+  background: #FFF8EC !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+nav > .max-w-7xl, nav .max-w-7xl{
+  width: 100% !important;
+  max-width: none !important;
+  height: 80px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+/* Navbar links and responsive layout */
+.nav-links{ align-items:center; gap:24px; flex-wrap:wrap; margin-left:auto; }
+.nav-links a{ margin: 0 6px; color:inherit; text-decoration:none; cursor:pointer; padding:6px 4px; transition: color .12s ease, transform .06s ease; }
+.nav-links a:hover{ color:#4E6F3B; }
+.nav-links a:active, .nav-links a:focus{ transform: translateY(1px); outline: none; }
+
+/* Brand text: scale down fluidly instead of overflowing on narrow screens */
+.nav-brand{
+  font-size: clamp(15px, 3.6vw, 30px);
+  max-width: 60vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Desktop login button */
+.nav-login-btn{ width:140px; height:42px; }
+
+/* Hamburger toggle (mobile only) */
+.nav-toggle{
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+.nav-toggle-bar{
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #4E6F3B;
+  border-radius: 2px;
+}
+
+/* Mobile dropdown menu */
+.nav-mobile-menu{
+  display: flex;
+  flex-direction: column;
+  padding: 12px 20px 20px;
+  background: #F6F4E8;
+  border-top: 1px solid #D8D5C7;
+}
+.nav-mobile-menu a{
+  padding: 10px 4px;
+  color: #6B6B60;
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 1px solid #E7E1CF;
+}
+.nav-mobile-menu a:hover{ color:#4E6F3B; }
+.nav-login-btn-mobile{
+  width: 100%;
+  height: 44px;
+  margin-top: 14px;
+}
+
+@media (max-width: 1279px){
+  .nav-toggle{ display: flex; }
+}
+
+/* Keep nav content separated by flexible spacer rather than fixed margins */
+.nav-spacer{ flex: 24; min-width:0; }
+
+@media (max-width: 1280px){
+  .nav-spacer{ flex: 14; }
+}
+@media (max-width: 1024px){
+  .nav-spacer{ flex: 2; }
+}
+@media (max-width: 768px){
+  .nav-links{ justify-content:flex-end; gap:14px; }
+}
+@media (max-width: 640px){
+  .nav-links{ gap:10px; }
+  .nav-links a{ font-size:14px; }
+}
+
+
+/* Hero section (bg-[#DDE7C9]) */
+.bg-\[\#DDE7C9\] > .max-w-7xl, .bg-\[\#DDE7C9\] .max-w-7xl{
+  min-height: 540px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+}
+.bg-\[\#DDE7C9\] h1{
+  font-size: clamp(32px, 6.2vw, 64px) !important;
+  line-height: 1.15 !important;
+  color: var(--primary) !important;
+  margin: 0;
+}
+.bg-\[\#DDE7C9\] p{ font-size: clamp(15px, 2.2vw, 18px) !important; color: #374151; }
+.bg-\[\#DDE7C9\] img{ border-radius: 10px; max-width:100%; height:auto; }
+
+/* Enlarge hero image and balance left text width per spec
+   Image target width around 560-620px (use 600px), keep aspect ratio */
+.bg-\[\#DDE7C9\] .max-w-7xl > div:first-child{ max-width:560px !important; width:100%; }
+.bg-\[\#DDE7C9\] .max-w-7xl > div:last-child{ min-width:0; }
+.bg-\[\#DDE7C9\] .max-w-7xl > div:last-child img{ width:100%; max-width:560px; height:auto; border-radius:10px; }
+
+/* Ensure larger gap between paragraph and Admin button */
+.bg-\[\#DDE7C9\] .max-w-7xl > div:first-child p{ margin-bottom: 0 !important; }
+.bg-\[\#DDE7C9\] .max-w-7xl > div:first-child .mt-6.flex{ margin-top: 28px !important; }
+
+/* Reduce extra top padding on hero left column so headline isn't pushed too far down */
+.bg-\[\#DDE7C9\] .max-w-7xl > div:first-child{ padding-top: 12px !important; padding-bottom:12px !important; }
+
+/* Further tighten hero left column to center headline with less vertical offset */
+.bg-\[\#DDE7C9\] .max-w-7xl > div:first-child{ padding-top: 0 !important; padding-bottom:0 !important; }
+.bg-\[\#DDE7C9\] .max-w-7xl{ align-items: center !important; }
+
+/* Ensure the About description stays centered and not shifted by other rules */
+section.bg-\[\#F6F4E8\]{ background: #F6F4E8 !important; }
+section.bg-\[\#F6F4E8\] p.text-center{ margin-left:auto !important; margin-right:auto !important; text-align:center !important; }
+
+/* HowItWorks: center the circular number and center content vertically */
+.md\:grid-cols-4 > .card{ display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:flex-start !important; padding:20px !important; }
+.md\:grid-cols-4 > .card .w-12{ margin:0 auto 8px auto !important; }
+
+/* Ensure the number badges in HowItWorks are perfectly centered */
+.card .w-12.rounded-md{ display:flex !important; align-items:center !important; justify-content:center !important; margin-left:auto !important; margin-right:auto !important; }
+
+/* Services: give paragraph more breathing room before the three cards */
+section.bg-\[\#EAF1D9\] > .max-w-7xl > p{ margin-bottom: 24px !important; }
+
+/* Services cards: increase space between the title and list, and ensure lists centered */
+.bg-\[\#F7F3E6\] h4{ margin-bottom:2px !important; text-align:center !important; }
+.bg-\[\#F7F3E6\] ul{ margin-left:auto !important; margin-right:auto !important; margin-top:4px !important; text-align:center !important; }
+
+/* Benefits: ensure header icon+title align center and description has space from cards */
+.bg-\[\#F7F3E6\] > .flex{ align-items:center !important; justify-content:center !important; }
+.bg-\[\#F7F3E6\] ul{ margin-top:18px !important; }
+
+/* Tighten gap between benefit title and its list */
+.bg-\[\#F7F3E6\] > ul{ margin-top:6px !important; }
+
+/* Services: tighter title->list spacing */
+.max-w-7xl .bg-\[\#F7F3E6\] h4{ margin-bottom:4px !important; }
+.max-w-7xl .bg-\[\#F7F3E6\] > ul{ margin-top:4px !important; }
+
+/* Center feature cards within About section so icons and titles align centrally */
+section.bg-\[\#F6F4E8\] .grid{ justify-items:center !important; }
+.bg-\[\#F7F3E6\] .w-16{ margin-left:auto !important; margin-right:auto !important; }
+.bg-\[\#F7F3E6\] img.w-12{ margin-left:auto !important; margin-right:auto !important; }
+
+/* Standardize ceklis icon circle across site (use exact green and ~28-30px outer size) */
+/* Make all checklist icons enclosed in a circular green badge similar to peduli icons */
+.check-badge{ width:36px; height:36px; border-radius:50%; background: rgba(84,107,65,0.9); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.check-badge img{ width:18px !important; height:18px !important; display:block; }
+
+/* Reduce gap in list items so text sits closer to the circular check */
+.bg-\[\#F7F3E6\] ul li{ gap:10px !important; align-items:center !important; }
+
+/* Services: hide literal bullet character in service lists (the '• ' in JSX) */
+section.bg-\[\#EAF1D9\] .bg-\[\#F7F3E6\] ul li::first-letter{ color: transparent; font-size: 0; }
+
+/* Navbar logo and spacing adjustments */
+.nav-logo{ width:48px; height:48px; object-fit:contain; margin-right:12px; }
+
+@media (max-width: 640px){
+  .nav-logo{ width:36px; height:36px; margin-right:8px; }
+}
+
+/* Make spacer take more space so menu shifts right on wide screens */
+.nav-spacer{ flex: 5; }
+
+@media (max-width: 1280px){
+  .nav-spacer{ flex: 3; }
+}
+@media (max-width: 1024px){
+  .nav-spacer{ flex: 1; }
+}
+
+/* Navbar links responsiveness and click feedback */
+.nav-links a{ cursor:pointer; padding:6px 4px; transition: color .12s ease, transform .06s ease; }
+.nav-links a:active, .nav-links a:focus{ transform: translateY(1px); outline: none; }
+
+@media (max-width: 640px){
+  .nav-links{ gap:12px; }
+  .nav-links a{ font-size:14px; }
+}
+
+/* Hero image scales fluidly with its column (see fluid rule above); no fixed breakpoints needed */
+
+/* Contact: ensure description text centered and has breathing room under the icon */
+.max-w-3xl .flex.flex-col .text-sm{ text-align:center !important; max-width: 260px; }
+.max-w-3xl .flex.flex-col > .font-semibold{ margin-top:6px !important; }
+.max-w-3xl .flex.flex-col > .text-sm{ margin-top:4px !important; }
+
+/* Section spacing: uniform */
+section{ padding-top: 80px; padding-bottom: 80px; scroll-margin-top: 96px; }
+
+/* Section titles */
+.section-title{ font-size: clamp(24px, 4.5vw, 42px) !important; font-weight:700 !important; color:var(--primary) !important; margin:0 0 12px 0; }
+
+/* Card baseline for all cards using the cream bg */
+.bg-\[\#F7F3E6\]{
+  background: rgba(250,235,204,0.65) !important;
+  padding: 22px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.03) !important;
+  border: 1px solid #E7E1CF !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content: flex-start !important;
+}
+.bg-\[\#F7F3E6\] h3{ font-size:28px !important; color:var(--primary) !important; text-align:center; margin-top:6px; }
+.bg-\[\#F7F3E6\] h4{ font-size:28px !important; color:var(--primary) !important; margin-top:6px; margin-bottom:0 !important; }
+
+/* Ensure header icon + title in benefits align on one line and centered vertically */
+.bg-\[\#F7F3E6\] .flex.items-center{ display:flex !important; align-items:center !important; gap:18px !important; }
+.bg-\[\#F7F3E6\] .flex.items-center h4{ text-align:center !important; margin:0 !important; }
+.bg-\[\#F7F3E6\] p, .bg-\[\#F7F3E6\] li{ font-size:16px !important; color:#5B5B53; line-height:1.6; }
+.bg-\[\#F7F3E6\] ul{ margin-top:0 !important; }
+.bg-\[\#F7F3E6\] ul li{ margin-bottom:2px !important; }
+
+/* Ensure grids stretch cards to same height */
+.max-w-7xl .grid{ align-items: stretch; }
+
+/* HowItWorks numbers badge */
+.w-12.h-12.rounded-md{ background:#DDE7C9 !important; }
+
+/* Services cards center list */
+.bg-\[\#F7F3E6\] ul{ text-align:left; margin:0 auto; }
+
+/* Benefits two large cards ensure equal height */
+.max-w-7xl .md\:grid-cols-2 > *{ display:flex; }
+.max-w-7xl .md\:grid-cols-2 > * > div{ width:100%; }
+
+/* Contact section */
+.bg-\[\#EAF1D9\]{ padding-top:80px; padding-bottom:80px; }
+.bg-\[\#EAF1D9\] .max-w-3xl{ margin:0 auto; }
+.bg-\[\#EAF1D9\] .w-12{ width:64px !important; height:64px !important; }
+.bg-\[\#EAF1D9\] .w-12 img{ width:36px !important; height:36px !important; }
+
+/* Footer */
+.site-footer{ height:80px; display:flex; align-items:center; justify-content:center; background:#2C3947 !important; color:#99BC85 !important; }
+
+/* Typography defaults */
+h1, h2, h3, h4{ color: var(--primary); }
+h1{ font-weight:700; }
+h2{ font-size:42px; }
+p{ font-size:18px; line-height:1.6; }
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 768px){
+  .bg-\[\#DDE7C9\] > .max-w-7xl{ grid-template-columns: 1fr !important; padding-left:20px; padding-right:20px; }
+  .px-14{ padding-left:20px !important; padding-right:20px !important; }
+  .max-w-7xl{ padding-left:20px; padding-right:20px; }
+  .bg-\[\#F7F3E6\]{ padding:18px !important; }
+}
+
+/* Hero column padding: the fixed pl-20/pr-10 utilities are too wide once columns stack */
+@media (max-width: 768px){
+  .bg-\[\#DDE7C9\] .pl-20{ padding-left:20px !important; }
+  .bg-\[\#DDE7C9\] .pr-10{ padding-right:12px !important; }
+}
+
+/* Hero's inline minHeight:620px is tuned for the two-column desktop layout;
+   once columns stack it leaves excess empty space, so let content size the
+   section on small screens instead. */
+@media (max-width: 768px){
+  .bg-\[\#DDE7C9\] .max-w-7xl{ min-height: 0 !important; }
+}
+
+/* Reduce section breathing room on small screens so content isn't overly spread out */
+@media (max-width: 640px){
+  section{ padding-top: 48px; padding-bottom: 48px; }
+  .bg-\[\#EAF1D9\]{ padding-top:48px; padding-bottom:48px; }
+}
+
+/* Benefits description spacing */
+section.bg-white > .max-w-7xl > p{ margin-bottom: 20px !important; }
+/* Smaller gap between icon and text in list items */
+.bg-\[\#F7F3E6\] ul li{ gap:12px; }
+
+/* Services: add separator before Harga Bervariasi in services cards */
+.bg-\[\#EAF1D9\] .bg-\[\#F7F3E6\] > .mt-4{
+  border-top: 1px solid #E7E1CF;
+  padding-top: 12px;
+  margin-top: auto;
+}

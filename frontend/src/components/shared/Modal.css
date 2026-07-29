@@ -1,0 +1,78 @@
+/* Shared blur-backdrop modal — same visual pattern as the Landing Page's
+   LoginModal (components/landing/LoginModal.css), generalized for reuse
+   across every admin modal (Tambah/Edit Nasabah, Tambah Setoran, etc.). */
+.shared-modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.shared-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+}
+
+.shared-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: var(--shared-modal-max-width, 460px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: var(--admin-card, #FDFAF6);
+  border: 1px solid #DBD4BD;
+  border-radius: 18px;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.12);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.shared-modal-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.shared-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.shared-modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--admin-primary, #546B41);
+  margin: 0;
+}
+
+.shared-modal-close {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border: none;
+  border-radius: 999px;
+  background: #E8DDB9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--admin-text, #2C3947);
+  transition: background 0.2s ease-out;
+}
+
+.shared-modal-close:hover {
+  background: #DECF9C;
+}

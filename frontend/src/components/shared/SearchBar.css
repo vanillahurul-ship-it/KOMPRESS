@@ -1,0 +1,29 @@
+.shared-search-bar {
+  flex: 1;
+  min-width: 240px;
+  max-width: 560px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 24px;
+  background: var(--admin-search, rgba(90, 136, 65, 0.75));
+}
+
+.shared-search-bar img {
+  width: 20px;
+  height: 20px;
+}
+
+.shared-search-bar input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #141414;
+  font-size: 14px;
+  outline: none;
+}
+
+.shared-search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.9);
+}

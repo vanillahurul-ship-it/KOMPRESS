@@ -1,0 +1,141 @@
+.panduan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panduan-step {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  background: var(--admin-sidebar, #E1EAD3);
+  overflow: hidden;
+}
+
+.panduan-step-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.panduan-step-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--admin-text, #2C3947);
+}
+
+.panduan-step-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  color: var(--admin-primary, #546B41);
+}
+
+.panduan-step.open .panduan-step-chevron {
+  transform: rotate(180deg);
+}
+
+.panduan-step-body {
+  padding: 0 22px 20px;
+  background: var(--admin-card, #FDFAF6);
+}
+
+.panduan-step-desc {
+  font-size: 14px;
+  color: #4B5563;
+  margin: 0 0 12px;
+}
+
+.panduan-step-list {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.panduan-step-list li {
+  font-size: 14px;
+  color: var(--admin-text, #2C3947);
+  line-height: 1.5;
+}
+
+/* Langkah bernomor dengan badge lingkaran, dipakai khusus di PanduanStep
+   (berbeda dari .panduan-step-list yang masih dipakai sebagai bullet list biasa
+   di PrediksiInfoRandomForest). */
+.panduan-step-numbered-list {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.panduan-step-numbered-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.panduan-step-numbered-item p {
+  margin: 0;
+  padding-top: 4px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--admin-text, #2C3947);
+}
+
+.panduan-step-number {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--admin-primary, #546B41);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panduan-step-note {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #F1E4C3;
+  color: #8A6D1D;
+}
+
+.panduan-step-note-title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.panduan-step-note-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.panduan-step-note-list li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.panduan-step-note-list li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+}

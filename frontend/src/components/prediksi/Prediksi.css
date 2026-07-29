@@ -1,0 +1,146 @@
+.shared-button-primary.prediksi-run-button {
+  color: #FFFFFF;
+}
+
+.prediksi-run-button img {
+  width: 26px;
+  height: 26px;
+}
+
+.prediksi-config-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.prediksi-horizon-toggle {
+  display: inline-flex;
+  background: var(--admin-sidebar, #E1EAD3);
+  border-radius: 14px;
+  padding: 4px;
+}
+
+.prediksi-horizon-toggle button {
+  border: none;
+  background: transparent;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--admin-text, #2C3947);
+  cursor: pointer;
+}
+
+.prediksi-horizon-toggle button.active {
+  background: var(--admin-sidebar-active, #FDFAF6);
+}
+
+.prediksi-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.prediksi-metrics-grid > * {
+  min-width: 0;
+}
+
+.prediksi-metric-tile {
+  background: var(--admin-sidebar, #E1EAD3);
+  border-radius: 16px;
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.prediksi-metric-tile p:first-child {
+  font-size: 12px;
+  color: #6B7280;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prediksi-metric-tile p:last-child {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--admin-text, #2C3947);
+  margin: 0;
+  word-break: break-word;
+}
+
+.prediksi-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.prediksi-table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+}
+
+.prediksi-table th,
+.prediksi-table td {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.prediksi-table th {
+  background: var(--admin-table-header, rgba(168, 178, 152, 0.91));
+  color: var(--admin-text, #2C3947);
+  font-size: 12px;
+}
+
+.prediksi-table td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  color: var(--admin-text, #2C3947);
+}
+
+.prediksi-metrics-info-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.prediksi-metrics-info-grid > * {
+  min-width: 0;
+}
+
+.prediksi-metrics-info-card {
+  background: var(--admin-sidebar, #E1EAD3);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+
+.prediksi-metrics-info-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--admin-primary, #546B41);
+  margin: 0 0 10px;
+}
+
+.prediksi-metrics-info-card ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prediksi-metrics-info-card li {
+  font-size: 13px;
+  color: var(--admin-text, #2C3947);
+  line-height: 1.5;
+}
+
+.prediksi-metrics-info-note {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: #6B7280;
+  line-height: 1.6;
+  margin: 4px 0 0;
+}

@@ -1,0 +1,17 @@
+.shared-empty-state {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.shared-empty-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--admin-text, #2C3947);
+  margin: 0 0 6px;
+}
+
+.shared-empty-description {
+  font-size: 13px;
+  color: #6B7280;
+  margin: 0;
+}

@@ -1,0 +1,166 @@
+/* Shared form styling for every modal/form built with react-hook-form
+   (Tambah/Edit Nasabah, Tambah Setoran, Jenis Sampah). */
+.shared-form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.shared-form-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--admin-primary, #546B41);
+  margin-bottom: 6px;
+}
+
+.shared-form-input,
+.shared-form-select {
+  width: 100%;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid #CFC7B0;
+  background: #F4ECD2;
+  color: #1F2937;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.shared-form-input:focus,
+.shared-form-select:focus {
+  border-color: var(--admin-primary, #546B41);
+  box-shadow: 0 0 0 4px rgba(84, 107, 65, 0.15);
+}
+
+/* Replace the native select arrow, which renders inconsistently across browsers
+   and sits flush against the edge, with a fixed chevron inset from the border. */
+.shared-form-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 42px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="%23546B41" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px;
+}
+
+.shared-form-input.readonly {
+  background: #EAE6D6;
+  color: #6B7280;
+}
+
+.shared-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.shared-password-wrapper .shared-form-input {
+  padding-right: 46px;
+}
+
+.shared-password-toggle {
+  position: absolute;
+  right: 12px;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.shared-password-toggle img {
+  width: 20px;
+  height: 20px;
+}
+
+.shared-autocomplete {
+  position: relative;
+}
+
+.shared-autocomplete-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #FFFFFF;
+  border: 1px solid #CFC7B0;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.shared-autocomplete-option {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1F2937;
+  cursor: pointer;
+}
+
+.shared-autocomplete-option:hover,
+.shared-autocomplete-option:focus {
+  background: #F4ECD2;
+  outline: none;
+}
+
+.shared-autocomplete-empty {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #6B7280;
+}
+
+.shared-form-error {
+  color: #C0392B;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.shared-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.shared-form-cancel,
+.shared-form-submit {
+  flex: 1;
+  height: 46px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.shared-form-cancel {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  color: #6B7280;
+}
+
+.shared-form-submit {
+  background: var(--admin-primary, #546B41);
+  color: #ffffff;
+}
+
+.shared-form-submit:hover {
+  background: #435634;
+}
+
+.shared-form-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

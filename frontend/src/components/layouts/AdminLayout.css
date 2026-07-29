@@ -1,0 +1,321 @@
+.admin-page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--admin-background, #F6F4E8);
+}
+
+.sidebar-container {
+  width: 280px;
+  height: 100vh;
+  background: var(--admin-sidebar, #E1EAD3);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sidebar-logo img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.sidebar-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--admin-brand, #39701A);
+}
+
+.brand-subtitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--admin-brand, #39701A);
+}
+
+.sidebar-admin-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 20px;
+  background: var(--admin-admin-box, rgba(131, 147, 113, 0.8));
+  color: var(--admin-admin-text, #fff);
+}
+
+.admin-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.3);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.admin-text span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.admin-text strong {
+  display: block;
+  font-size: 14px;
+  margin-top: 4px;
+  color: var(--admin-admin-name, #000000);
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  color: var(--admin-text, #2c3947);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-align: left;
+  text-decoration: none;
+}
+
+.sidebar-menu-item:hover,
+.sidebar-menu-item.active {
+  background: var(--admin-sidebar-active, #FDFAF6);
+}
+
+.sidebar-menu-item img {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+}
+
+.sidebar-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  color: #F52E2B;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.sidebar-logout img {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.admin-content-area {
+  flex: 1;
+  margin-left: 280px;
+  padding: 32px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Hamburger topbar: only rendered visually below the drawer breakpoint
+   (see the max-width: 1180px block) — on desktop the sidebar is always
+   visible so this stays hidden. */
+.admin-mobile-topbar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 12px;
+  background: var(--admin-sidebar, #E1EAD3);
+  cursor: pointer;
+}
+
+.admin-hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--admin-brand, #39701A);
+}
+
+.admin-mobile-brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--admin-brand, #39701A);
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 30;
+}
+
+.admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+  border-radius: 24px;
+  background: var(--admin-header, #2c3947);
+  color: var(--admin-header-text, #fff);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.admin-page-header h1 {
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--admin-header-text, #E1EAD3);
+}
+
+.admin-page-header p {
+  font-size: 14px;
+  color: var(--admin-header-text, #E1EAD3);
+}
+
+.admin-header-help {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--admin-header-text, #E1EAD3);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.admin-header-help:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.admin-content-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.shared-button-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 16px;
+  background: var(--admin-button, #afc99c);
+  color: var(--admin-text, #2C3947);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.shared-button-primary:hover {
+  background: #9bb67d;
+}
+
+.shared-button-primary img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Below this breakpoint the fixed sidebar becomes an off-canvas drawer,
+   toggled by the hamburger button in .admin-mobile-topbar, instead of
+   pushing/stacking above the page content. Desktop (above 1180px) keeps
+   the sidebar exactly as before. */
+@media (max-width: 1180px) {
+  .sidebar-container {
+    width: min(280px, 82vw);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.18);
+    overflow-y: auto;
+    z-index: 40;
+  }
+
+  .sidebar-container.open {
+    transform: translateX(0);
+  }
+
+  .admin-content-area {
+    margin-left: 0;
+    padding: 24px;
+  }
+
+  .admin-mobile-topbar {
+    display: flex;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-content-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-content-area {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .admin-page-header {
+    padding: 20px;
+  }
+
+  .admin-content-area .shared-card {
+    padding: 20px;
+  }
+}

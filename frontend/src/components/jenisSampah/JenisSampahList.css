@@ -1,0 +1,24 @@
+.jenis-sampah-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.jenis-sampah-row:last-child {
+  border-bottom: none;
+}
+
+.jenis-sampah-row-nama {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--admin-text, #2C3947);
+  margin: 0 0 4px;
+}
+
+.jenis-sampah-row-harga {
+  font-size: 13px;
+  color: var(--admin-rupiah, #5A8841);
+  margin: 0;
+}

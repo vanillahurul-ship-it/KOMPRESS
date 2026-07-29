@@ -1,0 +1,4 @@
+node_modules
+.env
+src/python/models/*.joblib
+src/python/models/metadata.json

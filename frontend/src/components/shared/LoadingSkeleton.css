@@ -1,0 +1,19 @@
+.shared-skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+.shared-skeleton-row {
+  height: 46px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #EFEBDB 25%, #F6F4E8 37%, #EFEBDB 63%);
+  background-size: 400% 100%;
+  animation: shared-skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes shared-skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
