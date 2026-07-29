@@ -18,9 +18,25 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
+    expose:
+      - "80"
+    mem_limit: 128m
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - frontend
     ports:
       - "80:80"
-    mem_limit: 128m
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    mem_limit: 96m
 
 volumes:
   ml_models:
+  caddy_data:
+  caddy_config:
