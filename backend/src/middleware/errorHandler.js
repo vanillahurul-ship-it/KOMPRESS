@@ -1,6 +1,20 @@
-// Centralized error handler — mounted last in app.js. Controllers wrapped in
-// asyncHandler (or that call next(err)) all end up here instead of repeating
-// try/catch + res.status(...).json(...) in every controller function.
+/**
+ * Penanganan Error Terpusat
+ *
+ * Middleware ini dipasang paling akhir di app.js. Seluruh error dari
+ * controller yang dibungkus asyncHandler (atau yang memanggil next(err))
+ * akan bermuara ke sini, sehingga tidak perlu ada blok try/catch berulang
+ * di setiap controller.
+ *
+ * Error yang berasal dari AppError membawa kode status dan pesannya sendiri.
+ * Error lain dianggap kesalahan tak terduga: pesan aslinya hanya dicatat di
+ * log server, sedangkan pengguna menerima pesan umum agar detail internal
+ * sistem tidak bocor.
+ *
+ * Parameter `next` wajib tetap ditulis walaupun tidak dipakai, karena Express
+ * mengenali middleware error dari jumlah parameternya yang berjumlah empat.
+ */
+
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
   console.error("ERROR:", err.message);

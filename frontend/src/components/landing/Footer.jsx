@@ -1,3 +1,9 @@
+/**
+ * Catatan Kaki Halaman Awal
+ *
+ * Bagian paling bawah halaman awal, berisi keterangan hak cipta.
+ */
+
 function Footer(){
   return (
     <footer className="site-footer">

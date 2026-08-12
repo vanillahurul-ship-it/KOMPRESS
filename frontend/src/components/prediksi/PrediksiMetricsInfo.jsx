@@ -1,3 +1,15 @@
+/**
+ * Penjelasan Nilai Evaluasi Model
+ *
+ * Menerangkan arti setiap nilai evaluasi yang ditampilkan komponen
+ * PrediksiMetrics, agar admin yang tidak berlatar teknis tetap dapat memahami
+ * maksud angka-angka tersebut.
+ *
+ * Isi penjelasannya disimpan dalam bentuk daftar data di bawah, sehingga
+ * penambahan atau perubahan penjelasan cukup dilakukan pada daftar itu tanpa
+ * menyentuh bagian tampilan.
+ */
+
 import "./Prediksi.css";
 
 const METRICS = [
@@ -31,8 +43,6 @@ const METRICS = [
   },
 ];
 
-// Penjelasan hasil evaluasi model Random Forest, ditampilkan di bawah tile metrik
-// pada halaman Prediksi supaya admin non-teknis memahami arti setiap angka.
 export default function PrediksiMetricsInfo() {
   return (
     <div className="prediksi-metrics-info-grid">

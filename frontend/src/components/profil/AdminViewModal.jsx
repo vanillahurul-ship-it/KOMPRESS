@@ -1,3 +1,21 @@
+/**
+ * Modal Detail Admin
+ *
+ * Menampilkan nama dan email seorang admin, sekaligus menyediakan dua tindakan
+ * yang berdiri sendiri: mengubah nama dan menetapkan kata sandi baru.
+ *
+ * Kata sandi yang sedang berlaku tidak dapat ditampilkan, karena Supabase Auth
+ * menyimpannya dalam bentuk terenkripsi dan tidak pernah mengembalikannya,
+ * bahkan dengan hak akses tertinggi sekalipun. Karena itu yang tersedia di sini
+ * adalah penetapan kata sandi baru, bukan penampilan kata sandi lama.
+ *
+ * @param {object} props
+ * @param {object|null} props.admin - Admin yang dilihat; null menutup modal.
+ * @param {Function} props.onClose - Menutup modal.
+ * @param {Function} props.onResetPassword - Menyimpan kata sandi baru.
+ * @param {Function} props.onUpdateName - Menyimpan nama baru.
+ */
+
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../shared/Modal";
@@ -7,13 +25,16 @@ import eyeOpen from "../../assets/icons/login/matabuka.svg";
 import eyeClosed from "../../assets/icons/login/mata tutup.svg";
 import editIcon from "../../assets/icons/datanasabah/editnasabah.svg";
 
-// Supabase Auth hashes passwords and never exposes them via any API — not even to
-// the service-role key — so this shows Nama + Email (read-only) plus a form to SET a
-// new password. It is a reset, not a "view", since the current password can't be read.
 export default function AdminViewModal({ admin, onClose, onResetPassword, onUpdateName }) {
   const [showPassword, setShowPassword] = useState(false);
+
+  // Menentukan isian nama sedang dalam mode ubah atau hanya-baca
   const [isEditingName, setIsEditingName] = useState(false);
+
+  // Nama yang sedang diketik. Disimpan terpisah dari react-hook-form karena
+  // penyimpanannya berdiri sendiri, tidak ikut tombol kirim form kata sandi.
   const [nameValue, setNameValue] = useState("");
+
   const [savingName, setSavingName] = useState(false);
 
   const {
@@ -23,6 +44,9 @@ export default function AdminViewModal({ admin, onClose, onResetPassword, onUpda
     formState: { errors, isSubmitting },
   } = useForm({ defaultValues: { password: "" } });
 
+  // Kembalikan seluruh isian ke keadaan awal setiap kali admin yang dilihat
+  // berganti, agar kata sandi yang sempat diketik untuk admin sebelumnya tidak
+  // tertinggal di layar
   useEffect(() => {
     reset({ password: "" });
     setShowPassword(false);
@@ -32,12 +56,22 @@ export default function AdminViewModal({ admin, onClose, onResetPassword, onUpda
 
   if (!admin) return null;
 
+  /** Menyimpan kata sandi baru lalu menutup modal. */
   const submit = async (values) => {
     await onResetPassword(admin.id, values.password);
     reset({ password: "" });
     onClose();
   };
 
+  /**
+   * Menangani tombol di samping isian nama.
+   *
+   * Tombol ini memiliki dua peran bergantian: membuka mode ubah, lalu
+   * menyimpan perubahannya.
+   *
+   * Bila nama dikosongkan atau tidak berubah, penyimpanan dilewati dan isian
+   * dikembalikan ke nilai semula, supaya tidak ada permintaan sia-sia ke server.
+   */
   const handleEditNameClick = async () => {
     if (!isEditingName) {
       setIsEditingName(true);

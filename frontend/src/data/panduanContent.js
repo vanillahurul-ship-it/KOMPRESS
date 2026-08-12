@@ -1,6 +1,20 @@
-// Konten tutorial "Cara Penggunaan Website" untuk admin Bank Sampah Macodes.
-// Dipisah dari komponen tampilan (PanduanPenggunaan.jsx) supaya mudah diperbarui
-// tanpa menyentuh markup/style.
+/**
+ * Isi Panduan Penggunaan Website
+ *
+ * Kumpulan materi panduan untuk admin Bank Sampah Macodes, yang ditampilkan
+ * di halaman Cara Penggunaan Website.
+ *
+ * Isi panduan sengaja dipisahkan dari komponen tampilannya, sehingga teksnya
+ * dapat diperbarui tanpa menyentuh kode tampilan sama sekali.
+ *
+ * Bentuk setiap bagian panduan:
+ *   judul     - Judul bagian yang selalu terlihat (wajib)
+ *   deskripsi - Pengantar singkat sebelum langkah (opsional)
+ *   langkah   - Daftar langkah bernomor (wajib)
+ *   catatan   - Keterangan tambahan, boleh satu kalimat atau beberapa poin (opsional)
+ *
+ * Urutan di dalam daftar ini menentukan urutan tampilannya di halaman.
+ */
 export const PANDUAN_STEPS = [
   {
     judul: "1. Login Admin",

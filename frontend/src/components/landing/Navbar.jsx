@@ -1,11 +1,29 @@
+/**
+ * Navigasi Halaman Awal
+ *
+ * Batang navigasi yang menempel di bagian atas halaman awal, berisi tautan ke
+ * setiap bagian halaman dan tombol masuk.
+ *
+ * Pada layar lebar seluruh tautan tampil berjajar, sedangkan pada layar kecil
+ * tautan disembunyikan ke dalam menu yang dibuka lewat tombol tiga garis.
+ *
+ * @param {{onOpenLogin: Function}} props - Membuka modal masuk.
+ */
+
 import { useState } from "react";
 import logobanksampah from "../../assets/icons/logobanksampah.png";
 
 function Navbar({ onOpenLogin }) {
+  // Keadaan menu pada layar kecil
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  /**
+   * Membuka modal masuk dari menu layar kecil.
+   *
+   * Menu ditutup lebih dahulu agar tidak menutupi modal yang akan muncul.
+   */
   const handleMobileLogin = () => {
     closeMenu();
     onOpenLogin();
@@ -45,6 +63,7 @@ function Navbar({ onOpenLogin }) {
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((current) => !current)}
           >
+            {/* Tiga elemen ini membentuk ikon tiga garis mendatar */}
             <span className="nav-toggle-bar" />
             <span className="nav-toggle-bar" />
             <span className="nav-toggle-bar" />
@@ -52,6 +71,7 @@ function Navbar({ onOpenLogin }) {
 
         </div>
 
+        {/* Menu untuk layar kecil; setiap tautan sekaligus menutup menu */}
         {isMenuOpen && (
           <div className="nav-mobile-menu xl:hidden">
             <a href="#beranda" onClick={closeMenu}>Beranda</a>

@@ -1,8 +1,21 @@
+/**
+ * Dropdown Status Transaksi
+ *
+ * Dropdown berbentuk label berwarna yang memungkinkan status setoran diubah
+ * langsung dari tabel. Warnanya menyesuaikan status yang sedang terpilih,
+ * memakai daftar warna yang sama dengan komponen StatusBadge.
+ *
+ * @param {object} props
+ * @param {string} props.status - Status yang sedang berlaku.
+ * @param {Function} props.onChange - Dipanggil dengan status yang baru dipilih.
+ */
+
 import { TRANSAKSI_STATUS, STATUS_BADGE_STYLE } from "../../constants/statusOptions";
 
-// Native select arrows render inconsistently across browsers and clash with the pill
-// shape/spacing of this control, so the arrow is disabled and replaced with a fixed
-// chevron drawn as a background image, positioned with explicit padding.
+// Tanda panah bawaan dropdown tampil berbeda-beda di setiap peramban dan tidak
+// serasi dengan bentuk lonjong komponen ini. Karena itu tanda panah bawaan
+// dimatikan lewat properti appearance, lalu diganti gambar panah buatan sendiri
+// yang dipasang sebagai latar belakang.
 const CHEVRON =
   'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">' +
   '<path d="M2 3.5L5 6.5L8 3.5" stroke="%23374151" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';

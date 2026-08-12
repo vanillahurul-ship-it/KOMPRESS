@@ -1,3 +1,15 @@
+/**
+ * Halaman Profil
+ *
+ * Menggabungkan tiga bagian pengaturan sistem:
+ *   1. Form profil bank sampah (nama, alamat, kontak, logo)
+ *   2. Daftar akun admin beserta pengelolaannya
+ *   3. Tautan menuju halaman panduan penggunaan
+ *
+ * Data profil diambil melalui useProfil yang bersumber dari context, sehingga
+ * perubahan yang disimpan di sini langsung terlihat pula pada sidebar.
+ */
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiHelpCircle } from "react-icons/fi";
@@ -12,7 +24,10 @@ import "../components/shared/Card.css";
 export default function Profil() {
   const { data: profil, update, remove } = useProfil();
   const { admins, loading: adminsLoading, resetPassword, updateName } = useAdmins();
+
+  // Admin yang sedang dilihat detailnya; null berarti modal tertutup
   const [viewingAdmin, setViewingAdmin] = useState(null);
+
   const navigate = useNavigate();
 
   return (

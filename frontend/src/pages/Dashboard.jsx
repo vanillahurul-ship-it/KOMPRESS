@@ -1,3 +1,20 @@
+/**
+ * Halaman Beranda (Dashboard)
+ *
+ * Menampilkan ringkasan kegiatan bank sampah dalam tiga bagian:
+ *   1. Kartu statistik: pendapatan, berat sampah, jumlah nasabah, dan transaksi
+ *   2. Grafik tren pendapatan dan berat sampah 12 bulan terakhir
+ *   3. Cuplikan grafik prediksi pendapatan 6 bulan ke depan
+ *
+ * Seluruh data diambil sekaligus lewat hook useDashboard, sehingga halaman ini
+ * cukup mengatur tampilannya saja.
+ *
+ * Tampilan halaman memiliki tiga kemungkinan keadaan:
+ *   loading    - menampilkan kerangka tampilan sementara (skeleton)
+ *   tanpa data - menampilkan keterangan bahwa data belum tersedia
+ *   normal     - menampilkan seluruh isi halaman
+ */
+
 import Header from "../components/layouts/Header";
 import StatCard from "../components/beranda/StatCard";
 import RevenueTrendChart from "../components/beranda/RevenueTrendChart";
@@ -94,6 +111,8 @@ export default function Dashboard() {
               />
             </h2>
             <p className="shared-card-subtitle">Prediksi 6 bulan ke depan (Random Forest Regression)</p>
+            {/* Prediksi memerlukan data historis yang cukup, sehingga bagian
+                ini bisa kosong walaupun data beranda lainnya sudah tersedia */}
             {data.prediksi ? (
               <PredictionMiniChart predictions={data.prediksi.predictions} />
             ) : (

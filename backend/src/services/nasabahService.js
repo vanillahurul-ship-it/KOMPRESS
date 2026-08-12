@@ -1,9 +1,27 @@
+/**
+ * Service Nasabah
+ *
+ * Mengelola tabel `nasabah` di Supabase.
+ *
+ * Hal penting yang perlu dipahami: saldo nasabah bukan nilai yang disimpan
+ * dan diubah manual, melainkan dihitung ulang dari tabel transaksi setiap
+ * kali data dibaca. Pendekatan ini dipilih agar saldo tidak pernah selisih
+ * dengan riwayat setoran yang sebenarnya.
+ */
+
 const supabase = require("../config/supabase");
 const transaksiService = require("./transaksiService");
 
-// Saldo is not stored per-nasabah; it's computed from the transaksi table on
-// every read so it always reflects the latest setoran data (see
-// transaksiService.getSaldoPerNasabah).
+/**
+ * Melengkapi data nasabah dengan saldo hasil perhitungan.
+ *
+ * Saldo diambil dari total seluruh setoran atas nama nasabah tersebut
+ * (lihat transaksiService.getSaldoPerNasabah). Nasabah yang belum pernah
+ * menyetor akan bersaldo 0.
+ *
+ * @param {Array<object>} rows - Daftar nasabah dari basis data.
+ * @returns {Promise<Array<object>>} Daftar nasabah beserta saldonya.
+ */
 const withComputedSaldo = async (rows) => {
   const saldoByNama = await transaksiService.getSaldoPerNasabah();
   return rows.map((nasabah) => ({
@@ -12,6 +30,11 @@ const withComputedSaldo = async (rows) => {
   }));
 };
 
+/**
+ * Mengambil seluruh nasabah beserta saldonya, diurutkan berdasarkan id.
+ *
+ * @returns {Promise<Array<object>>} Daftar nasabah.
+ */
 const getAllNasabah = async () => {
   const { data, error } = await supabase
     .from("nasabah")
@@ -25,6 +48,12 @@ const getAllNasabah = async () => {
   return withComputedSaldo(data);
 };
 
+/**
+ * Menyimpan nasabah baru.
+ *
+ * @param {object} nasabah - Data nasabah yang sudah divalidasi controller.
+ * @returns {Promise<object>} Data nasabah yang tersimpan beserta saldonya.
+ */
 const createNasabah = async (nasabah) => {
   const { data, error } = await supabase
     .from("nasabah")
@@ -40,6 +69,13 @@ const createNasabah = async (nasabah) => {
   return withSaldo;
 };
 
+/**
+ * Memperbarui data nasabah berdasarkan id.
+ *
+ * @param {number|string} id - Id nasabah.
+ * @param {object} nasabah - Field yang ingin diperbarui.
+ * @returns {Promise<object>} Data nasabah setelah diperbarui.
+ */
 const updateNasabah = async (id, nasabah) => {
   const { data, error } = await supabase
     .from("nasabah")
@@ -56,6 +92,12 @@ const updateNasabah = async (id, nasabah) => {
   return withSaldo;
 };
 
+/**
+ * Menghapus nasabah berdasarkan id.
+ *
+ * @param {number|string} id - Id nasabah.
+ * @returns {Promise<boolean>} Bernilai true bila berhasil.
+ */
 const deleteNasabah = async (id) => {
   const { error } = await supabase
     .from("nasabah")

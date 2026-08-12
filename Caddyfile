@@ -1,3 +1,0 @@
-macodescimanggu.my.id, www.macodescimanggu.my.id {
-    reverse_proxy frontend:80
-}

@@ -1,3 +1,18 @@
+/**
+ * Sidebar Navigasi Admin
+ *
+ * Menampilkan logo, identitas pengguna, daftar menu, dan tombol keluar.
+ *
+ * Logo diambil dari data profil bank sampah, sehingga logo yang diunggah di
+ * halaman Profil langsung terlihat di sini. Bila belum ada logo yang diunggah,
+ * dipakai logo bawaan aplikasi.
+ *
+ * @param {object} props
+ * @param {Function} props.onLogout - Dipanggil saat tombol keluar ditekan.
+ * @param {boolean} [props.isOpen=false] - Keadaan laci sidebar pada layar kecil.
+ * @param {Function} props.onClose - Menutup laci sidebar pada layar kecil.
+ */
+
 import { NavLink } from "react-router-dom";
 import defaultLogo from "../../assets/icons/logobanksampah.png";
 import useProfil from "../../hooks/useProfil";
@@ -10,6 +25,8 @@ import laporanIcon from "../../assets/icons/laporan.svg";
 import profilIcon from "../../assets/icons/profile.svg";
 import keluarIcon from "../../assets/icons/keluar.svg";
 
+// Daftar menu sidebar. Urutannya di sini menentukan urutan tampilannya,
+// dan alamat tujuannya harus sama dengan yang didaftarkan di AppRoutes.jsx.
 const menuItems = [
   { label: "Beranda", icon: berandaIcon, to: "/admin/dashboard" },
   { label: "Data Nasabah", icon: dataNasabahIcon, to: "/admin/nasabah" },
@@ -20,10 +37,10 @@ const menuItems = [
   { label: "Profil", icon: profilIcon, to: "/admin/profil" },
 ];
 
-// `isOpen`/`onClose` only matter below the drawer breakpoint (see AdminLayout.css) —
-// on desktop the sidebar is always visible and these are effectively no-ops.
 export default function Sidebar({ onLogout, isOpen = false, onClose }) {
   const { data: profil } = useProfil();
+
+  // Pakai logo yang diunggah admin bila tersedia, jika tidak pakai logo bawaan
   const logoSrc = profil?.logo_url || defaultLogo;
 
   return (
@@ -49,7 +66,10 @@ export default function Sidebar({ onLogout, isOpen = false, onClose }) {
           <NavLink
             key={item.label}
             to={item.to}
+            // NavLink menandai sendiri menu yang sedang aktif berdasarkan
+            // alamat halaman yang sedang dibuka
             className={({ isActive }) => `sidebar-menu-item ${isActive ? "active" : ""}`}
+            // Pada layar kecil, memilih menu sekaligus menutup laci sidebar
             onClick={onClose}
           >
             <img src={item.icon} alt="" />

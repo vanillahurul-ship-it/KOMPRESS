@@ -1,7 +1,25 @@
+/**
+ * Komponen Dialog Konfirmasi
+ *
+ * Jendela konfirmasi ya/tidak yang dibangun di atas komponen Modal. Dipakai
+ * untuk memastikan tindakan yang tidak dapat dibatalkan, seperti menghapus
+ * data dan keluar dari aplikasi.
+ *
+ * @param {object} props
+ * @param {boolean} props.isOpen - Menentukan dialog terbuka atau tertutup.
+ * @param {Function} props.onClose - Dipanggil saat dialog dibatalkan.
+ * @param {Function} props.onConfirm - Dipanggil saat tindakan disetujui.
+ * @param {string} [props.title="Konfirmasi"] - Judul dialog.
+ * @param {string} props.message - Pertanyaan yang ditampilkan.
+ * @param {string} [props.confirmLabel="Ya"] - Tulisan pada tombol setuju.
+ * @param {string} [props.cancelLabel="Tidak"] - Tulisan pada tombol batal.
+ * @param {boolean} [props.danger=false] - Bila true, tombol setuju diberi
+ *        warna merah sebagai penanda tindakan berisiko.
+ */
+
 import Modal from "./Modal";
 import "./ConfirmDialog.css";
 
-// Reusable Yes/No confirmation, used for delete confirmations and the logout prompt.
 export default function ConfirmDialog({
   isOpen,
   onClose,

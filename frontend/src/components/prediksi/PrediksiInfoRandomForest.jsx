@@ -1,8 +1,14 @@
+/**
+ * Penjelasan Algoritma Random Forest
+ *
+ * Menerangkan secara singkat cara kerja algoritma yang dipakai di halaman
+ * Prediksi. Bahasanya sengaja disusun untuk admin bank sampah, bukan sebagai
+ * dokumentasi teknis, sesuai kebutuhan panduan pengguna.
+ */
+
 import "../shared/Card.css";
 import "../panduan/Panduan.css";
 
-// Penjelasan singkat algoritma di balik halaman Prediksi, ditujukan untuk admin
-// (bukan dokumentasi teknis), sesuai permintaan User Guide.
 export default function PrediksiInfoRandomForest() {
   return (
     <section className="shared-card">

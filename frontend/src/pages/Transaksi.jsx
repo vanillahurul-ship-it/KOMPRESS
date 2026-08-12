@@ -1,3 +1,15 @@
+/**
+ * Halaman Transaksi
+ *
+ * Menampilkan seluruh setoran sampah beserta fitur pencarian, penyaringan
+ * tahun, pembagian halaman, dan pengelolaan datanya.
+ *
+ * Halaman ini memakai tiga hook data sekaligus:
+ *   useTransaksi   - data utama yang ditampilkan pada tabel
+ *   useNasabah     - mengisi pilihan nasabah pada form setoran
+ *   useJenisSampah - mengisi pilihan jenis sampah pada form setoran
+ */
+
 import { useMemo, useState } from "react";
 import Header from "../components/layouts/Header";
 import SearchBar from "../components/shared/SearchBar";
@@ -25,6 +37,8 @@ export default function Transaksi() {
   const [editingTransaksi, setEditingTransaksi] = useState(null);
   const [deletingTransaksi, setDeletingTransaksi] = useState(null);
 
+  // Menyusun pilihan tahun dari tanggal transaksi yang ada, diurutkan dari
+  // yang terbaru. Memakai Set agar tahun yang sama tidak muncul berulang.
   const availableYears = useMemo(() => {
     const years = new Set(
       data.map((item) => item.tanggal && Number(item.tanggal.slice(0, 4))).filter(Boolean)
@@ -32,6 +46,9 @@ export default function Transaksi() {
     return [...years].sort((a, b) => b - a);
   }, [data]);
 
+  // Menyaring transaksi berdasarkan nama nasabah dan tahun.
+  // Penyaringan tahun cukup memeriksa awalan tanggal, sebab tanggal tersimpan
+  // dalam format YYYY-MM-DD.
   const filteredData = useMemo(() => {
     const term = debouncedSearch.toLowerCase();
     return data.filter((item) => {
@@ -43,26 +60,33 @@ export default function Transaksi() {
 
   const { page, setPage, totalPages, pageItems } = usePagination(filteredData, 10);
 
+  /** Mengubah status setoran langsung dari dropdown pada tabel. */
   const handleStatusChange = (transaksi, status) => updateStatus(transaksi.id, status);
 
+  /** Membuka modal dalam mode pencatatan setoran baru. */
   const openNewSetoranModal = () => {
     setEditingTransaksi(null);
     setShowModal(true);
   };
 
+  /** Membuka modal dalam mode ubah data setoran. */
   const openEditSetoranModal = (transaksi) => {
     setEditingTransaksi(transaksi);
     setShowModal(true);
   };
 
+  /** Menutup modal sekaligus mengosongkan data yang sedang diubah. */
   const closeSetoranModal = () => {
     setShowModal(false);
     setEditingTransaksi(null);
   };
 
+  // Satu modal dipakai untuk dua keperluan. Mode ditentukan dari ada atau
+  // tidaknya data transaksi yang sedang diubah.
   const handleSubmit = (payload) =>
     editingTransaksi ? update(editingTransaksi.id, payload) : create(payload);
 
+  /** Menjalankan penghapusan setelah pengguna menekan tombol konfirmasi. */
   const confirmDelete = async () => {
     if (!deletingTransaksi) return;
     await remove(deletingTransaksi.id);

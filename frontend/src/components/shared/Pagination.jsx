@@ -1,6 +1,22 @@
+/**
+ * Komponen Navigasi Halaman
+ *
+ * Menampilkan tombol maju dan mundur beserta nomor halaman yang sedang dibuka.
+ *
+ * Perhitungan halaman tidak dilakukan di sini, melainkan oleh hook
+ * usePagination. Komponen ini hanya menampilkan dan meneruskan permintaan
+ * perpindahan halaman.
+ *
+ * @param {object} props
+ * @param {number} props.page - Nomor halaman saat ini.
+ * @param {number} props.totalPages - Jumlah seluruh halaman.
+ * @param {Function} props.onPageChange - Dipanggil dengan nomor halaman tujuan.
+ */
+
 import "./Pagination.css";
 
 export default function Pagination({ page, totalPages, onPageChange }) {
+  // Navigasi disembunyikan bila datanya hanya cukup untuk satu halaman
   if (totalPages <= 1) return null;
 
   return (

@@ -1,5 +1,25 @@
+/**
+ * Controller Otentikasi
+ *
+ * Menangani proses masuk (login) admin. Controller ini hanya bertugas
+ * memeriksa kelengkapan input dan menyusun response; pemeriksaan email dan
+ * kata sandi sepenuhnya diserahkan ke Supabase Auth melalui authService.
+ *
+ * Berbeda dengan controller lain yang memakai asyncHandler, di sini masih
+ * dipakai try/catch karena kegagalan masuk harus dijawab dengan kode 401
+ * (kredensial salah), bukan kode bawaan dari errorHandler.
+ */
+
 const authService = require("../services/authService");
 
+/**
+ * POST /api/auth/login
+ *
+ * Body: { email, password }
+ *
+ * Bila berhasil, mengembalikan data pengguna beserta access_token yang harus
+ * disimpan frontend dan dikirim ulang pada setiap permintaan berikutnya.
+ */
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -24,6 +44,7 @@ exports.login = async (req, res) => {
     });
 
   } catch (error) {
+    // Kegagalan masuk selalu dianggap kesalahan kredensial (401)
     return res.status(401).json({
       success: false,
       message: error.message,

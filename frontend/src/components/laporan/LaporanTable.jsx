@@ -1,8 +1,21 @@
+/**
+ * Tabel Laporan
+ *
+ * Menampilkan rekap pendapatan per bulan beserta baris totalnya di bagian
+ * paling bawah.
+ *
+ * Berkas gaya yang dipakai diambil dari folder prediksi, karena kedua tabel
+ * ini memakai tampilan yang sama persis.
+ *
+ * @param {{laporan: object}} props - Data laporan dari backend.
+ */
+
 import EmptyState from "../shared/EmptyState";
 import { formatCurrency, formatNumber } from "../../utils/formatCurrency";
 import "../prediksi/Prediksi.css";
 
 export default function LaporanTable({ laporan }) {
+  // Tahun yang dipilih bisa saja belum memiliki transaksi sama sekali
   if (!laporan.rows.length) {
     return <EmptyState title="Belum ada data" description={`Tidak ada transaksi selesai pada tahun ${laporan.tahun}.`} />;
   }

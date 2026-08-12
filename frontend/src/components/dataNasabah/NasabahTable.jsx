@@ -1,8 +1,25 @@
+/**
+ * Tabel Data Nasabah
+ *
+ * Menampilkan daftar nasabah beserta tombol ubah dan hapus pada setiap baris.
+ *
+ * Komponen ini menangani tiga keadaan tampilan: sedang memuat, tidak ada data,
+ * dan menampilkan data.
+ *
+ * @param {object} props
+ * @param {Array<object>} props.data - Nasabah pada halaman yang sedang dibuka.
+ * @param {boolean} props.loading - Menandakan data masih dimuat.
+ * @param {Function} props.onEdit - Dipanggil dengan data nasabah yang diubah.
+ * @param {Function} props.onDelete - Dipanggil dengan data nasabah yang dihapus.
+ */
+
 import NasabahRow from "./NasabahRow";
 import EmptyState from "../shared/EmptyState";
 import LoadingSkeleton from "../shared/LoadingSkeleton";
 import "../shared/Table.css";
 
+// Perbandingan lebar kolom tabel. Nilai ini dipakai bersama oleh baris kepala
+// dan baris isi, agar keduanya selalu sejajar walau lebar layar berubah.
 const COLUMNS = "1.3fr 1.6fr 1fr 1.1fr 0.9fr 0.9fr";
 
 export default function NasabahTable({ data, loading, onEdit, onDelete }) {

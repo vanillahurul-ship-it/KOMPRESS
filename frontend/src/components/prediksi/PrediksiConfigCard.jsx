@@ -1,3 +1,18 @@
+/**
+ * Kartu Pengaturan Prediksi
+ *
+ * Tempat pengguna memilih rentang waktu prediksi dan menjalankan prosesnya.
+ *
+ * Pilihan rentang waktu dibuat berupa dua tombol, bukan dropdown, karena
+ * pilihannya memang hanya dua dan keduanya lebih baik terlihat sekaligus.
+ *
+ * @param {object} props
+ * @param {number} props.horizon - Rentang waktu terpilih, 6 atau 12 bulan.
+ * @param {Function} props.onHorizonChange - Mengubah rentang waktu.
+ * @param {Function} props.onRun - Menjalankan prediksi.
+ * @param {boolean} props.loading - Menandakan prediksi sedang diproses.
+ */
+
 import "../shared/Card.css";
 import "./Prediksi.css";
 import trendIcon from "../../assets/icons/prediksi/prediksi.svg";
@@ -26,6 +41,8 @@ export default function PrediksiConfigCard({ horizon, onHorizonChange, onRun, lo
           </button>
         </div>
 
+        {/* Tombol dinonaktifkan selama proses berjalan, supaya prediksi tidak
+            terpicu berkali-kali karena tombol ditekan berulang */}
         <button type="button" className="shared-button-primary prediksi-run-button" onClick={onRun} disabled={loading}>
           <img src={trendIcon} alt="" />
           <span>{loading ? "Memproses..." : "Jalankan Prediksi"}</span>

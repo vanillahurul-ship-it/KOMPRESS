@@ -1,3 +1,17 @@
+/**
+ * Daftar Admin
+ *
+ * Menampilkan nama seluruh akun admin beserta tombol untuk membuka detailnya.
+ *
+ * Hanya nama yang ditampilkan pada daftar ini; email dan pengaturan kata sandi
+ * berada di dalam modal detail.
+ *
+ * @param {object} props
+ * @param {Array<object>} props.admins - Daftar akun admin.
+ * @param {boolean} props.loading - Menandakan data masih dimuat.
+ * @param {Function} props.onView - Dipanggil dengan admin yang dipilih.
+ */
+
 import eyeIcon from "../../assets/icons/login/matabuka.svg";
 import EmptyState from "../shared/EmptyState";
 import LoadingSkeleton from "../shared/LoadingSkeleton";

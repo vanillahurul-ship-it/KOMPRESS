@@ -1,14 +1,23 @@
+/**
+ * Bagian Manfaat Bergabung
+ *
+ * Menampilkan keuntungan menjadi nasabah bank sampah, dibagi menjadi dua
+ * kelompok berdampingan: manfaat ekonomi dan manfaat lingkungan.
+ */
+
 import manfaatekonomi from "../../assets/icons/landingpage/manfaatekonomi.svg";
 import manfaatlingkungan from "../../assets/icons/landingpage/manfaatlingkungan.svg";
 import ceklis from "../../assets/icons/landingpage/ceklismanfaat.svg";
 
 function Benefits() {
+  // Daftar poin manfaat ekonomi
   const econ = [
     'Penghasilan tambahan dari penjualan sampah',
     'Sistem tabungan yang transparan dan aman',
     'Harga sampah yang kompetitif',
     'Pencairan saldo yang mudah dan cepat',
   ];
+  // Daftar poin manfaat lingkungan
   const env = [
     'Mengurangi volume sampah di TPA',
     'Mencegah pencemaran lingkungan',

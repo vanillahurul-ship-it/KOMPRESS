@@ -1,3 +1,19 @@
+/**
+ * Modal Tambah dan Ubah Nasabah
+ *
+ * Satu modal yang dipakai untuk dua keperluan. Modenya ditentukan dari ada
+ * atau tidaknya initialData: bila berisi data, modal berjalan dalam mode ubah.
+ *
+ * Saldo hanya ditampilkan pada mode ubah dan bersifat hanya-baca, sebab
+ * nilainya dihitung backend dari riwayat transaksi dan tidak dapat disunting.
+ *
+ * @param {object} props
+ * @param {boolean} props.show - Menentukan modal terbuka atau tertutup.
+ * @param {Function} props.onClose - Menutup modal.
+ * @param {Function} props.onSubmit - Menyimpan data; menerima isi form.
+ * @param {object} [props.initialData] - Data nasabah yang sedang diubah.
+ */
+
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../shared/Modal";
@@ -23,6 +39,9 @@ export default function TambahNasabahModal({ show, onClose, onSubmit, initialDat
     },
   });
 
+  // Isi ulang form setiap kali modal dibuka: dikosongkan untuk data baru, atau
+  // diisi data lama untuk perubahan. Tanpa langkah ini, isian dari pembukaan
+  // modal sebelumnya masih akan tertinggal.
   useEffect(() => {
     if (!show) return;
     reset({
@@ -35,6 +54,13 @@ export default function TambahNasabahModal({ show, onClose, onSubmit, initialDat
 
   if (!show) return null;
 
+  /**
+   * Menyimpan isi form.
+   *
+   * Modal hanya ditutup bila penyimpanan berhasil. Bila gagal, error yang
+   * dilempar hook membuat baris onClose tidak sempat dijalankan, sehingga
+   * isian pengguna tidak hilang begitu saja.
+   */
   const submit = async (values) => {
     await onSubmit(values);
     onClose();
@@ -65,6 +91,8 @@ export default function TambahNasabahModal({ show, onClose, onSubmit, initialDat
           {errors.alamat && <span className="shared-form-error">{errors.alamat.message}</span>}
         </div>
 
+        {/* Saldo hanya ditampilkan saat mengubah data, dan tidak dapat disunting
+            karena nilainya dihitung otomatis dari riwayat transaksi */}
         {isEditMode && (
           <div className="shared-form-field">
             <label className="shared-form-label">Saldo (Rp)</label>

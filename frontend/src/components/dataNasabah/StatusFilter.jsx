@@ -1,7 +1,19 @@
+/**
+ * Penyaring Status Nasabah
+ *
+ * Dropdown untuk menyaring nasabah berdasarkan status keaktifannya.
+ *
+ * Susunan dan penamaan kelasnya sengaja disamakan dengan YearFilter di
+ * components/laporan/YearFilter.jsx, agar seluruh dropdown penyaring dalam
+ * aplikasi ini tampil seragam.
+ *
+ * @param {object} props
+ * @param {string} props.value - Status terpilih; teks kosong berarti semua.
+ * @param {Function} props.onChange - Dipanggil dengan status yang dipilih.
+ */
+
 import { NASABAH_STATUS } from "../../constants/statusOptions";
 
-// Sama pola markup dengan YearFilter (components/laporan/YearFilter.jsx) supaya
-// konsisten dengan dropdown filter di halaman Laporan & Transaksi.
 export default function StatusFilter({ value, onChange }) {
   return (
     <select

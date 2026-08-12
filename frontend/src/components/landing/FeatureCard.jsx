@@ -1,3 +1,19 @@
+/**
+ * Kartu Fitur
+ *
+ * Kartu berisi ikon, judul, dan penjelasan singkat. Dipakai berulang pada
+ * beberapa bagian halaman awal, seperti Layanan dan Manfaat.
+ *
+ * @param {object} props
+ * @param {string} props.icon - Alamat berkas ikon.
+ * @param {string} props.title - Judul fitur.
+ * @param {string} props.description - Penjelasan singkat.
+ * @param {boolean} [props.noBadge=false] - Bila true, ikon ditampilkan polos
+ *        tanpa lingkaran berwarna di belakangnya. Pilihan ini disediakan
+ *        karena sebagian ikon sudah memiliki warnanya sendiri, sehingga akan
+ *        tampak bertumpuk bila diberi lingkaran tambahan.
+ */
+
 function FeatureCard({ icon, title, description, noBadge = false }) {
   return (
     <div className="bg-[#F7F3E6] rounded-2xl shadow-sm border border-[#E7E1CF] p-6 w-full max-w-[320px] text-center transition hover:shadow-md card-shadow">

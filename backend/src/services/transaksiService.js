@@ -1,15 +1,37 @@
+/**
+ * Service Transaksi
+ *
+ * Mengelola tabel `transaksi` di Supabase sekaligus menyediakan hasil
+ * agregasinya untuk modul dashboard, laporan, dan prediksi.
+ *
+ * Dua hal yang perlu diperhatikan pada tabel ini:
+ *
+ * 1. Nama kolomnya masih memakai spasi dan huruf kapital karena data awalnya
+ *    diimpor dari spreadsheet. Penerjemahan bentuk data dilakukan lewat
+ *    toApiShape dan toDbShape agar bagian lain aplikasi memakai penamaan yang
+ *    konsisten.
+ *
+ * 2. Tabel ini tidak memiliki kolom relasi (foreign key) ke tabel nasabah,
+ *    sehingga penggabungan data hanya bisa dilakukan lewat kolom nama nasabah.
+ */
+
 const supabase = require("../config/supabase");
 
+// Nama bulan berbahasa Indonesia untuk label laporan dan grafik
 const BULAN_LABEL = [
   "Januari", "Februari", "Maret", "April", "Mei", "Juni",
   "Juli", "Agustus", "September", "Oktober", "November", "Desember",
 ];
 
+// Daftar kolom yang diambil; tanda kutip diperlukan karena nama kolom berspasi
 const COLUMNS = '"Bulan", "Tanggal", "Nama Nasabah", "Jenis Sampah", "Berat (Kg)", "Harga Satuan", "Total Setoran (Rp)", status, id';
 
-// The real `transaksi` table has no FK columns and uses spaced/capitalised
-// column names (it was imported from a spreadsheet) — map it to a stable,
-// camel/snake-cased shape the frontend and other services can rely on.
+/**
+ * Mengubah baris basis data menjadi bentuk yang dipakai aplikasi.
+ *
+ * @param {object} row - Baris mentah dari tabel transaksi.
+ * @returns {object} Data transaksi dengan penamaan field yang seragam.
+ */
 const toApiShape = (row) => ({
   id: row.id,
   bulan: row["Bulan"],
@@ -22,6 +44,15 @@ const toApiShape = (row) => ({
   status: row.status,
 });
 
+/**
+ * Mengubah data aplikasi kembali ke bentuk kolom basis data.
+ *
+ * Hanya field yang benar-benar dikirim yang disertakan, sehingga aman dipakai
+ * untuk pembaruan sebagian (partial update).
+ *
+ * @param {object} payload - Data dalam bentuk aplikasi.
+ * @returns {object} Objek siap simpan dengan nama kolom asli.
+ */
 const toDbShape = (payload) => {
   const row = {};
   if (payload.bulan !== undefined) row["Bulan"] = payload.bulan;
@@ -35,11 +66,20 @@ const toDbShape = (payload) => {
   return row;
 };
 
-// PostgREST caps a single request at 1000 rows by default — the `transaksi`
-// table already exceeds that, so both the list and the revenue aggregation
-// below must page through with `.range()` or they'd silently drop rows.
+// Supabase (PostgREST) membatasi satu permintaan maksimal 1000 baris.
+// Jumlah data transaksi sudah melebihi angka tersebut, sehingga pengambilan
+// data wajib dilakukan bertahap agar tidak ada baris yang terpotong diam-diam.
 const PAGE_SIZE = 1000;
 
+/**
+ * Mengambil seluruh baris tabel transaksi secara bertahap per 1000 baris.
+ *
+ * Perulangan berhenti ketika jumlah baris yang diterima kurang dari
+ * PAGE_SIZE, yang menandakan halaman terakhir sudah tercapai.
+ *
+ * @param {string} select - Daftar kolom yang ingin diambil.
+ * @returns {Promise<Array<object>>} Seluruh baris hasil penggabungan halaman.
+ */
 const fetchAllRows = async (select) => {
   let allRows = [];
   let from = 0;
@@ -60,6 +100,14 @@ const fetchAllRows = async (select) => {
   return allRows;
 };
 
+/**
+ * Mengambil seluruh transaksi, diurutkan dari yang terbaru.
+ *
+ * Bila tanggalnya sama, urutan ditentukan oleh id yang lebih besar sehingga
+ * transaksi yang paling akhir dicatat tampil lebih dahulu.
+ *
+ * @returns {Promise<Array<object>>} Daftar transaksi.
+ */
 const getAllTransaksi = async () => {
   const rows = await fetchAllRows(COLUMNS);
   return rows
@@ -67,6 +115,12 @@ const getAllTransaksi = async () => {
     .sort((a, b) => (b.tanggal || "").localeCompare(a.tanggal || "") || b.id - a.id);
 };
 
+/**
+ * Menyimpan transaksi setoran baru.
+ *
+ * @param {object} payload - Data transaksi yang sudah dihitung controller.
+ * @returns {Promise<object>} Transaksi yang berhasil tersimpan.
+ */
 const createTransaksi = async (payload) => {
   const { data, error } = await supabase
     .from("transaksi")
@@ -78,6 +132,13 @@ const createTransaksi = async (payload) => {
   return toApiShape(data);
 };
 
+/**
+ * Memperbarui transaksi berdasarkan id.
+ *
+ * @param {number|string} id - Id transaksi.
+ * @param {object} payload - Field yang ingin diperbarui.
+ * @returns {Promise<object>} Transaksi setelah diperbarui.
+ */
 const updateTransaksi = async (id, payload) => {
   const { data, error } = await supabase
     .from("transaksi")
@@ -90,6 +151,13 @@ const updateTransaksi = async (id, payload) => {
   return toApiShape(data);
 };
 
+/**
+ * Mengubah status transaksi saja.
+ *
+ * @param {number|string} id - Id transaksi.
+ * @param {string} status - Status baru.
+ * @returns {Promise<object>} Transaksi setelah diperbarui.
+ */
 const updateStatus = async (id, status) => {
   const { data, error } = await supabase
     .from("transaksi")
@@ -102,22 +170,46 @@ const updateStatus = async (id, status) => {
   return toApiShape(data);
 };
 
+/**
+ * Menghapus transaksi berdasarkan id.
+ *
+ * @param {number|string} id - Id transaksi.
+ * @returns {Promise<boolean>} Bernilai true bila berhasil.
+ */
 const deleteTransaksi = async (id) => {
   const { error } = await supabase.from("transaksi").delete().eq("id", id);
   if (error) throw new Error(error.message);
   return true;
 };
 
-// Aggregates the `transaksi` table into one row per calendar month, in the
-// shape the dashboard/laporan/prediksi features consume (replaces the
-// `v_pendapatan_bulanan` view, which does not exist on the live database).
+/**
+ * Merangkum seluruh transaksi menjadi satu baris per bulan.
+ *
+ * Hasilnya dipakai bersama oleh modul dashboard, laporan, dan prediksi.
+ * Perangkuman dilakukan di sisi aplikasi, bukan lewat view basis data,
+ * karena view `v_pendapatan_bulanan` tidak tersedia di basis data yang
+ * sedang berjalan.
+ *
+ * @returns {Promise<Array<{
+ *   tahun: number,
+ *   bulan_num: number,
+ *   bulan: string,
+ *   jumlah_transaksi: number,
+ *   total_berat: number,
+ *   total_pendapatan: number
+ * }>>} Rekap bulanan terurut dari bulan terlama ke terbaru.
+ */
 const getPendapatanBulanan = async () => {
   const data = await fetchAllRows('"Tanggal", "Berat (Kg)", "Total Setoran (Rp)"');
 
+  // Kelompokkan transaksi ke dalam Map dengan kunci "tahun-bulan"
   const byMonth = new Map();
   for (const row of data) {
     const tanggal = row["Tanggal"];
+
+    // Baris tanpa tanggal dilewati karena tidak dapat dimasukkan ke bulan mana pun
     if (!tanggal) continue;
+
     const [tahunStr, bulanStr] = tanggal.split("-");
     const tahun = Number(tahunStr);
     const bulan_num = Number(bulanStr);
@@ -126,20 +218,29 @@ const getPendapatanBulanan = async () => {
     if (!byMonth.has(key)) {
       byMonth.set(key, { tahun, bulan_num, jumlah_transaksi: 0, total_berat: 0, total_pendapatan: 0 });
     }
+
     const entry = byMonth.get(key);
     entry.jumlah_transaksi += 1;
     entry.total_berat += Number(row["Berat (Kg)"] || 0);
     entry.total_pendapatan += Number(row["Total Setoran (Rp)"] || 0);
   }
 
+  // Urutkan secara kronologis lalu tambahkan label nama bulan
   return [...byMonth.values()]
     .sort((a, b) => a.tahun - b.tahun || a.bulan_num - b.bulan_num)
     .map((row) => ({ ...row, bulan: BULAN_LABEL[row.bulan_num - 1] }));
 };
 
-// Nasabah saldo is derived data, not a stored value: it's the running sum of
-// every transaksi recorded against that nasabah's name (the `transaksi` table
-// has no nasabah_id FK, so name is the only join key available).
+/**
+ * Menghitung saldo setiap nasabah dari seluruh riwayat transaksinya.
+ *
+ * Saldo tidak disimpan sebagai kolom tersendiri, melainkan merupakan
+ * penjumlahan seluruh setoran atas nama nasabah tersebut. Penggabungan
+ * memakai nama karena tabel transaksi tidak memiliki kolom relasi ke tabel
+ * nasabah.
+ *
+ * @returns {Promise<Map<string, number>>} Peta nama nasabah ke total saldonya.
+ */
 const getSaldoPerNasabah = async () => {
   const rows = await fetchAllRows('"Nama Nasabah", "Total Setoran (Rp)"');
 
@@ -147,6 +248,7 @@ const getSaldoPerNasabah = async () => {
   for (const row of rows) {
     const nama = row["Nama Nasabah"];
     if (!nama) continue;
+
     const total = Number(row["Total Setoran (Rp)"] || 0);
     saldoByNama.set(nama, (saldoByNama.get(nama) || 0) + total);
   }

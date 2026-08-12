@@ -1,3 +1,13 @@
+/**
+ * Halaman Cara Penggunaan Website
+ *
+ * Menampilkan panduan pemakaian aplikasi dalam bentuk daftar langkah yang
+ * dapat dibuka dan ditutup.
+ *
+ * Isi panduannya sendiri disimpan terpisah di data/panduanContent.js, sehingga
+ * teks panduan dapat diperbarui tanpa perlu menyentuh kode tampilan.
+ */
+
 import Header from "../components/layouts/Header";
 import PanduanStep from "../components/panduan/PanduanStep";
 import { PANDUAN_STEPS } from "../data/panduanContent";

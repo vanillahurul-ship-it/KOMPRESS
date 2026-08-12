@@ -1,3 +1,31 @@
+/**
+ * Modal Tambah dan Ubah Setoran
+ *
+ * Form pencatatan setoran sampah. Sama seperti modal nasabah, satu modal
+ * dipakai untuk dua keperluan, dan modenya ditentukan dari ada atau tidaknya
+ * initialData.
+ *
+ * Dua bagian yang perlu diperhatikan:
+ *
+ *   1. Isian nasabah memakai pencarian dengan saran otomatis, bukan dropdown
+ *      biasa, sebab jumlah nasabah bisa banyak sehingga menggulir daftar
+ *      menjadi tidak praktis. Nama yang diketik dan id yang terpilih disimpan
+ *      terpisah, agar hanya nasabah yang benar-benar dipilih dari daftar yang
+ *      dianggap sah.
+ *
+ *   2. Harga per kilogram dan total ditampilkan sebagai isian hanya-baca.
+ *      Angka tersebut hanya berfungsi sebagai gambaran bagi pengguna;
+ *      perhitungan yang sebenarnya tetap dilakukan backend.
+ *
+ * @param {object} props
+ * @param {boolean} props.show - Menentukan modal terbuka atau tertutup.
+ * @param {Function} props.onClose - Menutup modal.
+ * @param {Function} props.onSubmit - Menyimpan data setoran.
+ * @param {Array<object>} props.nasabahList - Pilihan nasabah.
+ * @param {Array<object>} props.jenisSampahList - Pilihan jenis sampah.
+ * @param {object} [props.initialData] - Data transaksi yang sedang diubah.
+ */
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../shared/Modal";
@@ -25,13 +53,21 @@ export default function TambahSetoranModal({ show, onClose, onSubmit, nasabahLis
     },
   });
 
+  // Teks yang sedang diketik pada isian pencarian nasabah
   const [nasabahSearch, setNasabahSearch] = useState("");
+
+  // Menentukan daftar saran nasabah sedang ditampilkan atau tidak
   const [showNasabahOptions, setShowNasabahOptions] = useState(false);
+
   const nasabahFieldRef = useRef(null);
 
+  // Isi ulang form setiap kali modal dibuka, agar isian dari pembukaan
+  // sebelumnya tidak tertinggal
   useEffect(() => {
     if (!show) return;
     if (initialData) {
+      // Data transaksi menyimpan nama, bukan id, sehingga nasabah dan jenis
+      // sampahnya perlu dicari kembali untuk mengisi form
       const matchedNasabah = nasabahList.find((item) => item.nama === initialData.nama_nasabah);
       reset({
         nasabah_id: matchedNasabah?.id || "",
@@ -52,6 +88,7 @@ export default function TambahSetoranModal({ show, onClose, onSubmit, nasabahLis
     setShowNasabahOptions(false);
   }, [show, initialData, nasabahList, jenisSampahList, reset]);
 
+  // Menutup daftar saran ketika pengguna menekan di luar area isian nasabah
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (nasabahFieldRef.current && !nasabahFieldRef.current.contains(event.target)) {
@@ -71,12 +108,21 @@ export default function TambahSetoranModal({ show, onClose, onSubmit, nasabahLis
     [nasabahList, selectedNasabahId]
   );
 
+  // Saran nasabah sesuai kata kunci yang diketik. Bila kolom masih kosong,
+  // seluruh nasabah ditampilkan.
   const filteredNasabahList = useMemo(() => {
     const term = nasabahSearch.trim().toLowerCase();
     if (!term) return nasabahList;
     return nasabahList.filter((item) => item.nama.toLowerCase().includes(term));
   }, [nasabahList, nasabahSearch]);
 
+  /**
+   * Menangani ketikan pada isian pencarian nasabah.
+   *
+   * Bila pengguna kembali mengetik setelah sebelumnya memilih seseorang,
+   * pilihan lama dikosongkan. Tanpa langkah ini, nama yang tertulis di layar
+   * bisa berbeda dengan nasabah yang sebenarnya tersimpan.
+   */
   const handleNasabahSearchChange = (event) => {
     const value = event.target.value;
     setNasabahSearch(value);
@@ -86,12 +132,20 @@ export default function TambahSetoranModal({ show, onClose, onSubmit, nasabahLis
     }
   };
 
+  /** Menetapkan nasabah yang dipilih dari daftar saran. */
   const handleNasabahSelect = (nasabah) => {
     setValue("nasabah_id", nasabah.id, { shouldValidate: true });
     setNasabahSearch(nasabah.nama);
     setShowNasabahOptions(false);
   };
 
+  /**
+   * Pintasan papan ketik pada isian nasabah.
+   *
+   * Enter memilih saran bila tersisa tepat satu, sehingga pengguna tidak perlu
+   * beralih ke tetikus. Perilaku bawaan Enter dicegah agar form tidak ikut
+   * terkirim. Escape menutup daftar saran.
+   */
   const handleNasabahSearchKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -108,11 +162,20 @@ export default function TambahSetoranModal({ show, onClose, onSubmit, nasabahLis
     [jenisSampahList, selectedJenisSampahId]
   );
 
+  // Perkiraan total: harga per kilogram dikali berat yang diisi. Angka ini
+  // hanya untuk ditampilkan; nilai yang tersimpan dihitung ulang oleh backend.
   const hargaPerKg = selectedJenisSampah?.harga_per_kg || 0;
   const total = hargaPerKg * (Number(beratValue) || 0);
 
   if (!show) return null;
 
+  /**
+   * Menyimpan isi form.
+   *
+   * Backend menerima nama nasabah dan nama jenis sampah, bukan id-nya,
+   * sehingga keduanya diambil dari data yang terpilih. Harga dan total tidak
+   * ikut dikirim karena dihitung sendiri oleh backend.
+   */
   const submit = async (values) => {
     await onSubmit({
       nama_nasabah: selectedNasabah?.nama,
@@ -140,6 +203,9 @@ export default function TambahSetoranModal({ show, onClose, onSubmit, nasabahLis
               onFocus={() => setShowNasabahOptions(true)}
               onKeyDown={handleNasabahSearchKeyDown}
             />
+            {/* Isian tersembunyi yang menyimpan id nasabah terpilih. Isian
+                inilah yang divalidasi, bukan teks pencariannya, sehingga nama
+                yang diketik sembarangan tidak dianggap sah */}
             <input type="hidden" {...register("nasabah_id", requiredRule("Nasabah"))} />
             {showNasabahOptions && (
               <ul className="shared-autocomplete-list">

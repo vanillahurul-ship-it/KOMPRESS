@@ -1,3 +1,15 @@
+/**
+ * Bagian Sambutan (Hero)
+ *
+ * Bagian paling atas halaman awal, berisi judul utama, penjelasan singkat,
+ * tombol masuk admin, dan foto kegiatan bank sampah.
+ *
+ * Tata letaknya dua kolom pada layar lebar, dan menumpuk ke bawah pada layar
+ * kecil melalui kelas md:grid-cols-2.
+ *
+ * @param {{onOpenLogin: Function}} props - Membuka modal masuk.
+ */
+
 import FotoMacodes from "../../assets/images/foto-macodes.png";
 import adminIcon from "../../assets/icons/landingpage/admin.svg";
 

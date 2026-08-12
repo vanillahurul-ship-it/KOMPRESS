@@ -1,6 +1,17 @@
-// Mirrors the CSS custom properties defined in src/index.css (--admin-*) so
-// chart libraries (Recharts) that need raw color values in JS stay in sync
-// with the same palette used by CSS across the admin panel.
+/**
+ * Palet Warna Aplikasi
+ *
+ * Nilai-nilai di sini merupakan salinan dari CSS custom properties (--admin-*)
+ * yang didefinisikan di src/index.css.
+ *
+ * Penyalinan ini diperlukan karena pustaka grafik seperti Recharts menerima
+ * warna dalam bentuk nilai JavaScript, bukan variabel CSS. Dengan menyimpan
+ * salinannya di sini, tampilan grafik tetap selaras dengan warna panel admin.
+ *
+ * Catatan pemeliharaan: bila warna di index.css diubah, nilai di berkas ini
+ * perlu ikut disesuaikan agar keduanya tidak berbeda.
+ */
+
 export const COLORS = {
   background: "#F6F4E8",
   sidebar: "#E1EAD3",
@@ -22,4 +33,8 @@ export const COLORS = {
   rupiah: "#5A8841",
 };
 
+/**
+ * Urutan warna untuk garis dan batang pada grafik.
+ * Disusun agar warna antarseri tetap mudah dibedakan.
+ */
 export const CHART_PALETTE = [COLORS.primary, COLORS.rupiah, COLORS.brand, COLORS.button];

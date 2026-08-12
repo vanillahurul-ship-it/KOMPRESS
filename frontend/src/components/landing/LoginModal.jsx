@@ -1,4 +1,25 @@
-﻿import { useEffect, useState } from "react";
+﻿/**
+ * Modal Masuk Admin
+ *
+ * Form masuk yang muncul dari halaman awal.
+ *
+ * Modal ini menerima dua penanda keadaan yang berbeda dari komponen induk:
+ *   isOpen    - modal masih berada di halaman
+ *   isVisible - modal dalam keadaan terlihat penuh
+ *
+ * Pemisahan tersebut memungkinkan modal menampilkan animasi memudar sebelum
+ * benar-benar dilepas dari halaman. Setelah animasinya selesai, komponen ini
+ * memberi tahu induknya melalui onCloseComplete.
+ *
+ * @param {object} props
+ * @param {boolean} props.isOpen - Modal masih dipasang di halaman.
+ * @param {boolean} props.isVisible - Modal sedang terlihat.
+ * @param {Function} props.onClose - Memulai proses penutupan.
+ * @param {Function} props.onCloseComplete - Dipanggil setelah animasi selesai.
+ * @param {Function} props.onLoginSuccess - Dipanggil setelah berhasil masuk.
+ */
+
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import "./LoginModal.css";
 import logobanksampah from "../../assets/icons/logobanksampah.png";
@@ -15,6 +36,10 @@ function LoginModal({ isOpen, isVisible, onClose, onCloseComplete, onLoginSucces
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
+  // Beri tahu induk setelah animasi memudar selesai, agar modal dilepas dari
+  // halaman. Jeda 300 milidetik disesuaikan dengan durasi animasi di
+  // LoginModal.css; bila durasi di berkas gaya diubah, angka ini perlu
+  // disesuaikan pula.
   useEffect(() => {
     if (!isVisible && isOpen) {
       const timeout = setTimeout(() => {
@@ -25,7 +50,17 @@ function LoginModal({ isOpen, isVisible, onClose, onCloseComplete, onLoginSucces
     return undefined;
   }, [isOpen, isVisible, onCloseComplete]);
 
+  /**
+   * Menjalankan proses masuk.
+   *
+   * Penyimpanan token dan data pengguna ditangani AuthContext, sehingga
+   * komponen ini cukup mengurus tampilan dan pemberitahuannya saja.
+   *
+   * Modal tidak ditutup sendiri di sini; penutupannya terjadi karena halaman
+   * berpindah ke beranda admin melalui onLoginSuccess.
+   */
   const handleLogin = async (event) => {
+    // Cegah peramban memuat ulang halaman saat form dikirim
     event.preventDefault();
 
     try {

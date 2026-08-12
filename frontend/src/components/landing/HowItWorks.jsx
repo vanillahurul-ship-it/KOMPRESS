@@ -1,3 +1,13 @@
+/**
+ * Bagian Cara Kerja
+ *
+ * Menjelaskan alur menjadi nasabah bank sampah dalam empat langkah bernomor.
+ *
+ * Isi langkahnya disimpan sebagai daftar data di dalam komponen, sehingga
+ * penambahan atau perubahan langkah cukup dilakukan pada daftar tersebut dan
+ * penomorannya menyesuaikan dengan sendirinya.
+ */
+
 function HowItWorks() {
   const steps = [
     { title: "Daftar Sebagai Admin", desc: "Daftarkan diri Anda dan dapatkan buku tabungan sampah secara gratis." },
@@ -13,6 +23,7 @@ function HowItWorks() {
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-stretch">
           {steps.map((s, i) => (
             <div key={i} className="card text-center">
+              {/* Nomor langkah diambil dari urutannya di dalam daftar */}
               <div className="w-12 h-12 rounded-md bg-[#DDE7C9] mx-auto flex items-center justify-center text-lg font-bold text-[#334E20]">{i+1}</div>
               <h4 className="mt-4 font-semibold">{s.title}</h4>
               <p className="mt-2 text-sm text-[#5B5B53]">{s.desc}</p>

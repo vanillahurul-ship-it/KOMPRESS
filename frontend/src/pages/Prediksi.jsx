@@ -1,3 +1,16 @@
+/**
+ * Halaman Prediksi Pendapatan
+ *
+ * Menjalankan prediksi pendapatan dengan metode Random Forest Regression,
+ * lalu menampilkan hasilnya dalam bentuk kartu ringkasan, grafik, nilai
+ * evaluasi model, dan tabel rincian.
+ *
+ * Prediksi tidak dijalankan otomatis saat halaman dibuka, sebab prosesnya
+ * memerlukan waktu. Pengguna memilih rentang waktu terlebih dahulu, kemudian
+ * menekan tombol untuk menjalankannya. Karena itu seluruh bagian hasil hanya
+ * ditampilkan setelah prediksi selesai dijalankan.
+ */
+
 import { useState } from "react";
 import Header from "../components/layouts/Header";
 import PrediksiConfigCard from "../components/prediksi/PrediksiConfigCard";
@@ -14,7 +27,9 @@ import "../components/shared/Card.css";
 import "../components/prediksi/Prediksi.css";
 
 export default function Prediksi() {
+  // Rentang prediksi dalam bulan; pilihannya hanya 6 atau 12
   const [horizon, setHorizon] = useState(6);
+
   const { result, loading, run } = usePrediksi();
 
   return (
@@ -30,10 +45,13 @@ export default function Prediksi() {
         loading={loading}
       />
 
+      {/* Seluruh bagian di bawah baru muncul setelah prediksi dijalankan */}
       {result && (
         <>
           <PrediksiSummaryCards result={result} horizon={horizon} />
 
+          {/* Peringatan muncul bila data historisnya masih sedikit, sehingga
+              evaluasi model kurang objektif */}
           {result.warning && (
             <p style={{ color: "#8A6D1D", fontSize: 13, margin: 0 }}>{result.warning}</p>
           )}

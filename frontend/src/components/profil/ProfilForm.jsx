@@ -1,3 +1,23 @@
+/**
+ * Form Profil Bank Sampah
+ *
+ * Form pengaturan identitas bank sampah beserta unggahan logonya.
+ *
+ * Dua hal yang membedakan form ini dari form lain:
+ *
+ *   1. Penyimpanan memerlukan konfirmasi. Data yang telah lolos pemeriksaan
+ *      ditahan lebih dahulu, lalu baru dikirim setelah pengguna menyetujuinya
+ *      lewat dialog konfirmasi.
+ *
+ *   2. Logo yang baru dipilih langsung ditampilkan sebagai pratinjau, sebelum
+ *      benar-benar disimpan ke server.
+ *
+ * @param {object} props
+ * @param {object|null} props.profil - Data profil dari context.
+ * @param {Function} props.onSubmit - Menyimpan perubahan.
+ * @param {Function} props.onDelete - Menghapus data profil.
+ */
+
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ConfirmDialog from "../shared/ConfirmDialog";
@@ -5,6 +25,16 @@ import "../shared/Form.css";
 import "../shared/Card.css";
 import { emailRule, phoneRule, requiredRule } from "../../utils/validators";
 
+/**
+ * Menyusun nilai awal form dari data profil.
+ *
+ * Setiap field diberi nilai cadangan berupa teks kosong agar seluruh isian
+ * tetap bersifat terkendali (controlled) sejak awal, termasuk ketika data
+ * profil belum tersedia.
+ *
+ * @param {object|null} profil - Data profil dari backend.
+ * @returns {object} Nilai awal seluruh isian form.
+ */
 const buildDefaultValues = (profil) => ({
   nama_bank: profil?.nama_bank || "",
   alamat: profil?.alamat || "",
@@ -26,21 +56,35 @@ export default function ProfilForm({ profil, onSubmit, onDelete }) {
     defaultValues: buildDefaultValues(profil),
   });
 
+  // Isi form yang sudah lolos pemeriksaan dan sedang menunggu persetujuan.
+  // Nilainya juga menentukan tampil atau tidaknya dialog konfirmasi.
   const [pendingValues, setPendingValues] = useState(null);
+
   const [saving, setSaving] = useState(false);
+
+  // Alamat gambar logo yang ditampilkan; bisa berasal dari server maupun dari
+  // berkas yang baru saja dipilih
   const [logoPreview, setLogoPreview] = useState(profil?.logo_url || null);
+
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   const logoFileList = watch("logo");
 
+  // Selaraskan isi form setiap kali data profil berubah, termasuk ketika
+  // datanya menjadi kosong setelah penghapusan. Tanpa langkah ini, isian lama
+  // akan tetap tertinggal di layar meski datanya sudah tidak ada.
   useEffect(() => {
-    // Reset on every profil change — including profil === null (e.g. right after
-    // a delete), so the form actually clears instead of keeping stale values.
     reset(buildDefaultValues(profil));
     setLogoPreview(profil?.logo_url || null);
   }, [profil, reset]);
 
+  // Tampilkan pratinjau segera setelah pengguna memilih berkas logo.
+  //
+  // createObjectURL membuat alamat sementara yang menunjuk ke berkas di
+  // perangkat pengguna, sehingga gambar dapat ditampilkan tanpa perlu diunggah
+  // lebih dahulu. Alamat tersebut dilepas kembali pada bagian pembersihan agar
+  // memori peramban tidak terus terpakai.
   useEffect(() => {
     const file = logoFileList?.[0];
     if (!(file instanceof File)) return;
@@ -49,11 +93,22 @@ export default function ProfilForm({ profil, onSubmit, onDelete }) {
     return () => URL.revokeObjectURL(objectUrl);
   }, [logoFileList]);
 
+  /**
+   * Menahan data yang sudah lolos pemeriksaan dan membuka dialog konfirmasi.
+   *
+   * Data belum dikirim ke server pada tahap ini.
+   */
   const stageSubmit = (values) => {
     console.log("[ProfilForm] form valid, awaiting confirmation before saving:", values);
     setPendingValues(values);
   };
 
+  /**
+   * Mengirim data yang tertahan setelah pengguna menyetujuinya.
+   *
+   * Berkas logo dipisahkan dari field lainnya karena elemen input berkas
+   * menghasilkan daftar berkas, sedangkan yang diperlukan hanya berkas pertama.
+   */
   const confirmSubmit = async () => {
     if (!pendingValues) return;
     const { logo, ...fields } = pendingValues;
@@ -69,10 +124,13 @@ export default function ProfilForm({ profil, onSubmit, onDelete }) {
     }
   };
 
-  // "Hapus Perubahan" clears the saved profile (including the stored logo)
-  // back to its default, blank state — via the existing DELETE /profil
-  // endpoint. The form/preview then follow `profil` becoming null through
-  // the effect above, and the sidebar falls back to the default logo.
+  /**
+   * Menghapus seluruh data profil yang tersimpan, termasuk berkas logonya.
+   *
+   * Setelah penghapusan berhasil, data profil menjadi kosong. Form dan
+   * pratinjau ikut menyesuaikan melalui useEffect di atas, sedangkan sidebar
+   * kembali menampilkan logo bawaan aplikasi.
+   */
   const confirmRemove = async () => {
     setDeleting(true);
     try {
@@ -160,6 +218,7 @@ export default function ProfilForm({ profil, onSubmit, onDelete }) {
         </div>
       </form>
 
+      {/* Dialog persetujuan penyimpanan */}
       <ConfirmDialog
         isOpen={Boolean(pendingValues)}
         onClose={() => setPendingValues(null)}
@@ -170,6 +229,7 @@ export default function ProfilForm({ profil, onSubmit, onDelete }) {
         cancelLabel="Batal"
       />
 
+      {/* Dialog persetujuan penghapusan data profil */}
       <ConfirmDialog
         isOpen={confirmDeleteOpen}
         onClose={() => setConfirmDeleteOpen(false)}

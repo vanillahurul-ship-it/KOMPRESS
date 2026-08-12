@@ -1,3 +1,16 @@
+/**
+ * Kartu Ringkasan Prediksi
+ *
+ * Menampilkan total prediksi pendapatan dan rata-ratanya per bulan.
+ *
+ * Memakai kembali komponen StatCard dari halaman Beranda, agar tampilan angka
+ * ringkasan di seluruh aplikasi tetap seragam.
+ *
+ * @param {object} props
+ * @param {object} props.result - Hasil prediksi dari backend.
+ * @param {number} props.horizon - Rentang prediksi dalam bulan.
+ */
+
 import StatCard from "../beranda/StatCard";
 import { formatCurrency } from "../../utils/formatCurrency";
 

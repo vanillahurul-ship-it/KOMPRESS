@@ -1,3 +1,14 @@
+/**
+ * Halaman Laporan
+ *
+ * Menampilkan rekap pendapatan bulanan untuk satu tahun, dilengkapi penyaring
+ * tahun dan tombol untuk mengunduh laporan ke berkas PDF maupun Excel.
+ *
+ * Berbeda dengan halaman lain, penyaringan tahun di sini dikerjakan backend.
+ * Setiap pergantian tahun akan mengambil data baru, bukan menyaring data yang
+ * sudah ada di peramban.
+ */
+
 import Header from "../components/layouts/Header";
 import YearFilter from "../components/laporan/YearFilter";
 import ExportButtons from "../components/laporan/ExportButtons";

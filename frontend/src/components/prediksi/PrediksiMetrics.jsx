@@ -1,8 +1,22 @@
+/**
+ * Kotak Nilai Evaluasi Model
+ *
+ * Menampilkan empat nilai evaluasi model prediksi: MAE, MSE, RMSE, dan R².
+ * Penjelasan arti masing-masing nilai ditampilkan komponen PrediksiMetricsInfo
+ * tepat di bawahnya.
+ *
+ * @param {object} props
+ * @param {number} props.mae - Mean Absolute Error.
+ * @param {number} props.rmse - Root Mean Squared Error.
+ * @param {number} props.r2 - Koefisien determinasi (R² Score).
+ */
+
 import "./Prediksi.css";
 
 export default function PrediksiMetrics({ mae, rmse, r2 }) {
-  // Backend hanya mengembalikan MAE, RMSE, dan R² — MSE diturunkan di sini sebagai
-  // RMSE^2 (RMSE = akar dari MSE) tanpa perlu mengubah model/backend Python.
+  // Backend hanya mengirim MAE, RMSE, dan R². Nilai MSE diperoleh dengan
+  // mengkuadratkan RMSE, sebab RMSE memang merupakan akar dari MSE. Dengan
+  // begitu nilai MSE dapat ditampilkan tanpa perlu mengubah skrip Python.
   const mse = rmse * rmse;
 
   return (
@@ -13,6 +27,8 @@ export default function PrediksiMetrics({ mae, rmse, r2 }) {
       </div>
       <div className="prediksi-metric-tile">
         <p>MSE</p>
+        {/* Angka desimal MSE dibuang karena nilainya sangat besar,
+            hasil dari pengkuadratan */}
         <p>{mse.toLocaleString("id-ID", { maximumFractionDigits: 0 })}</p>
       </div>
       <div className="prediksi-metric-tile">

@@ -1,3 +1,13 @@
+/**
+ * Bagian Tentang Kami
+ *
+ * Memperkenalkan Bank Sampah Macodes beserta tiga nilai utamanya, yang
+ * ditampilkan memakai komponen FeatureCard.
+ *
+ * Seluruh ikon di bagian ini memakai noBadge, sebab ikon-ikonnya sudah
+ * berwarna sehingga tidak perlu lingkaran latar tambahan.
+ */
+
 import FeatureCard from "./FeatureCard";
 import terpercaya from "../../assets/icons/landingpage/terpercaya.svg";
 import peduli from "../../assets/icons/landingpage/peduli.svg";

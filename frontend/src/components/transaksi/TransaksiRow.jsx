@@ -1,3 +1,21 @@
+/**
+ * Baris Tabel Transaksi
+ *
+ * Menampilkan data satu setoran. Berbeda dengan baris nasabah, status di sini
+ * berupa dropdown yang dapat langsung diubah tanpa membuka modal, sebab
+ * perubahan status merupakan kegiatan yang sering dilakukan.
+ *
+ * Tanda hubung ditampilkan untuk data yang kosong, agar tabel tetap rapi
+ * walaupun ada baris lama yang datanya tidak lengkap.
+ *
+ * @param {object} props
+ * @param {object} props.data - Data satu transaksi.
+ * @param {Function} props.onStatusChange - Dipanggil saat status diubah.
+ * @param {Function} props.onEdit - Dipanggil saat tombol ubah ditekan.
+ * @param {Function} props.onDelete - Dipanggil saat tombol hapus ditekan.
+ * @param {object} props.style - Pengaturan lebar kolom dari komponen tabel.
+ */
+
 import editIcon from "../../assets/icons/datanasabah/editnasabah.svg";
 import deleteIcon from "../../assets/icons/datanasabah/hapusnasabah.svg";
 import StatusDropdown from "./StatusDropdown";

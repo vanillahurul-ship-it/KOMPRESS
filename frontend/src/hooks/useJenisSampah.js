@@ -1,11 +1,25 @@
+/**
+ * Hook useJenisSampah
+ *
+ * Menyediakan data daftar harga sampah beserta operasi tambah, ubah, dan
+ * hapusnya untuk halaman Jenis Sampah.
+ *
+ * Hook ini juga dipakai halaman Transaksi untuk mengisi pilihan jenis sampah
+ * pada form setoran.
+ */
+
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import * as jenisSampahApi from "../services/jenisSampahApi";
 
+/**
+ * @returns {{data: Array, loading: boolean, create: Function, update: Function, remove: Function, refetch: Function}}
+ */
 export default function useJenisSampah() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  /** Mengambil ulang daftar jenis sampah dari backend. */
   const refetch = useCallback(async () => {
     setLoading(true);
     try {
@@ -18,10 +32,15 @@ export default function useJenisSampah() {
     }
   }, []);
 
+  // Ambil data saat halaman pertama kali dibuka
   useEffect(() => {
     refetch();
   }, [refetch]);
 
+  /**
+   * Menambahkan jenis sampah baru.
+   * @param {object} payload - Data jenis sampah dari form.
+   */
   const create = async (payload) => {
     try {
       await jenisSampahApi.createJenisSampah(payload);
@@ -33,6 +52,11 @@ export default function useJenisSampah() {
     }
   };
 
+  /**
+   * Memperbarui data jenis sampah.
+   * @param {number|string} id - Id jenis sampah.
+   * @param {object} payload - Data baru dari form.
+   */
   const update = async (id, payload) => {
     try {
       await jenisSampahApi.updateJenisSampah(id, payload);
@@ -44,6 +68,10 @@ export default function useJenisSampah() {
     }
   };
 
+  /**
+   * Menghapus jenis sampah.
+   * @param {number|string} id - Id jenis sampah.
+   */
   const remove = async (id) => {
     try {
       await jenisSampahApi.deleteJenisSampah(id);

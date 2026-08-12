@@ -1,3 +1,15 @@
+/**
+ * Bagian Layanan
+ *
+ * Menampilkan kelompok sampah anorganik yang diterima bank sampah beserta
+ * beberapa contohnya.
+ *
+ * Daftar ini bersifat gambaran umum bagi pengunjung dan tidak terhubung dengan
+ * data jenis sampah di basis data. Daftar harga yang sebenarnya dikelola admin
+ * melalui halaman Jenis Sampah, karena itu di sini hanya tertulis "Harga
+ * Bervariasi".
+ */
+
 function Services() {
   const cards = [
     { title: 'Plastik', items: ['Botol Plastik', 'Plastik Kemasan', 'Pet Campur', 'dan lain - lain'] },

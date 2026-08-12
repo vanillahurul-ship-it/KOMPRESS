@@ -1,3 +1,15 @@
+/**
+ * Bagian Kontak
+ *
+ * Menampilkan alamat, nomor telepon, email, dan jam operasional bank sampah.
+ *
+ * Keterangan di bagian ini ditulis langsung pada kode, terpisah dari data
+ * profil yang dikelola admin. Halaman awal memang dapat dibuka tanpa masuk,
+ * sedangkan data profil hanya dapat diambil setelah pengguna memiliki token.
+ * Karena itu, bila keterangan di sini perlu diperbarui, perubahannya dilakukan
+ * pada berkas ini.
+ */
+
 import alamat from "../../assets/icons/landingpage/alamat.svg";
 import telepon from "../../assets/icons/landingpage/telepon.svg";
 import email from "../../assets/icons/landingpage/email.svg";
