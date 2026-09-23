@@ -1,8 +1,0 @@
-node_modules
-npm-debug.log*
-.env
-.env.*
-!.env.example
-src/python/models/*.joblib
-src/python/models/metadata.json
-.git
