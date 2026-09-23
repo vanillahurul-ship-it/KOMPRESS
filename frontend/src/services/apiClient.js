@@ -1,13 +1,10 @@
 /**
  * Klien API
- *
  * Instance axios yang dipakai bersama oleh seluruh berkas api di folder ini.
  * Dua hal yang diatur secara terpusat di sini:
  *
- *   1. Penyisipan token login pada setiap permintaan, sehingga tidak perlu
- *      ditulis berulang di setiap pemanggilan API.
- *   2. Penyeragaman pesan error, sehingga komponen cukup membaca
- *      `error.message` tanpa perlu menelusuri struktur response axios.
+ *   1. Penyisipan token login pada setiap permintaan, sehingga tidak perlu ditulis berulang di setiap pemanggilan API.
+ *   2. Penyeragaman pesan error, sehingga komponen cukup membaca `error.message` tanpa perlu menelusuri struktur response axios.
  *
  * Alamat backend diambil dari variabel lingkungan VITE_API_URL agar alamat
  * saat pengembangan dan saat produksi dapat dibedakan tanpa mengubah kode.
